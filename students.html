@@ -97,12 +97,8 @@
             background: linear-gradient(135deg, #00488d 0%, #005fb8 100%);
         }
     </style>
-<style>
-    body {
-      min-height: max(884px, 100dvh);
-    }
-  </style>
-  </head>
+<script src="config.js"></script>
+</head>
 <body class="bg-background text-on-surface font-body antialiased min-h-screen flex flex-col">
 <!-- TopAppBar -->
 <header class="fixed top-0 z-50 flex justify-between items-center w-full px-6 py-4 bg-slate-50 dark:bg-slate-950 transition-colors duration-300 shadow-none border-none">
@@ -129,17 +125,17 @@
 </div>
 <nav class="flex flex-col gap-2 flex-grow">
 <!-- Dashboard -->
-<a class="flex items-center gap-4 px-4 py-3 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-900 transition-all duration-200 ease-in-out" href="#">
+<a class="flex items-center gap-4 px-4 py-3 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-900 transition-all duration-200 ease-in-out" href="index.html">
 <span class="material-symbols-outlined">dashboard</span>
 <span class="font-inter text-sm font-medium">Dashboard</span>
 </a>
 <!-- Students (Active) -->
-<a class="flex items-center gap-4 px-4 py-3 rounded-lg bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 font-bold transition-all duration-200 ease-in-out" href="#">
+<a class="flex items-center gap-4 px-4 py-3 rounded-lg bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 font-bold transition-all duration-200 ease-in-out" href="students.html">
 <span class="material-symbols-outlined fill">group</span>
 <span class="font-inter text-sm">Students</span>
 </a>
 <!-- QR Generator -->
-<a class="flex items-center gap-4 px-4 py-3 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-900 transition-all duration-200 ease-in-out" href="#">
+<a class="flex items-center gap-4 px-4 py-3 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-900 transition-all duration-200 ease-in-out" href="generator.html">
 <span class="material-symbols-outlined">qr_code_2</span>
 <span class="font-inter text-sm font-medium">QR Generator</span>
 </a>
@@ -156,139 +152,154 @@
 <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-10 pt-4">
 <div class="flex flex-col gap-2">
 <h1 class="font-headline text-4xl lg:text-5xl font-extrabold text-on-surface tracking-tight leading-none">Student Directory</h1>
-<p class="font-label text-xs uppercase tracking-[0.15em] text-primary font-bold">Total Registered: 1,492</p>
+<p id="total-registered" class="font-label text-xs uppercase tracking-[0.15em] text-primary font-bold">Total Registered: Loading...</p>
 </div>
 <div class="flex flex-col sm:flex-row gap-4 w-full lg:w-auto">
 <!-- Search Bar -->
 <div class="relative w-full sm:w-[320px]">
 <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant/70">search</span>
-<input class="w-full bg-surface-container-highest text-on-surface placeholder:text-on-surface-variant/70 rounded-xl py-3 pl-12 pr-4 border-none focus:ring-2 focus:ring-primary/20 focus:bg-surface-container-lowest transition-all font-body text-sm outline-none" placeholder="Search names or IDs..." type="text"/>
+<input id="search-input" class="w-full bg-surface-container-highest text-on-surface placeholder:text-on-surface-variant/70 rounded-xl py-3 pl-12 pr-4 border-none focus:ring-2 focus:ring-primary/20 focus:bg-surface-container-lowest transition-all font-body text-sm outline-none" placeholder="Search names or IDs..." type="text"/>
 </div>
 <!-- Primary Action Button -->
-<button class="bg-primary-gradient text-on-primary px-6 py-3 rounded-xl font-label font-bold text-sm tracking-wide flex items-center justify-center gap-2 hover:opacity-90 transition-opacity shadow-[0_4px_14px_rgba(0,72,141,0.2)]">
+<button onclick="showAddModal()" class="bg-primary-gradient text-on-primary px-6 py-3 rounded-xl font-label font-bold text-sm tracking-wide flex items-center justify-center gap-2 hover:opacity-90 transition-opacity shadow-[0_4px_14px_rgba(0,72,141,0.2)]">
 <span class="material-symbols-outlined text-[20px]">person_add</span>
                     Add Student
                 </button>
 </div>
 </div>
-<!-- Student List (No-Line Philosophy, Alternating Backgrounds) -->
-<div class="flex flex-col gap-3">
-<!-- List Item 1 (Surface) -->
-<div class="group flex flex-col sm:flex-row sm:items-center justify-between p-4 sm:p-5 rounded-2xl bg-surface hover:bg-surface-container-lowest hover:shadow-[0_8px_30px_rgb(25,28,33,0.04)] transition-all duration-300">
-<div class="flex items-center gap-5 mb-4 sm:mb-0">
-<div class="w-12 h-12 rounded-full bg-secondary-container flex items-center justify-center text-on-secondary-container font-headline font-extrabold text-lg">AJ</div>
-<div>
-<h3 class="font-headline font-bold text-on-surface text-lg leading-tight mb-0.5">Alexia Johnson</h3>
-<p class="font-body text-sm text-on-surface-variant">STD-24-0019</p>
-</div>
-</div>
-<div class="flex items-center gap-3 sm:gap-6 self-start sm:self-auto w-full sm:w-auto justify-between sm:justify-end">
-<div class="px-3 py-1 bg-primary-fixed rounded-md">
-<span class="font-label text-[10px] uppercase tracking-wider font-bold text-on-primary-fixed-variant">Active</span>
-</div>
-<div class="flex items-center gap-2">
-<button class="flex items-center gap-2 px-4 py-2 rounded-xl text-primary hover:bg-surface-container-highest transition-colors font-label font-bold text-sm">
-<span class="material-symbols-outlined text-[20px]">qr_code_2</span>
-<span class="hidden xs:inline">View QR</span>
-</button>
-<button class="p-2.5 rounded-xl text-on-surface-variant hover:text-primary hover:bg-surface-container-highest transition-colors flex items-center justify-center">
-<span class="material-symbols-outlined text-[20px]">edit</span>
-</button>
-</div>
-</div>
-</div>
-<!-- List Item 2 (Surface Container Low) -->
-<div class="group flex flex-col sm:flex-row sm:items-center justify-between p-4 sm:p-5 rounded-2xl bg-surface-container-low hover:bg-surface-container-lowest hover:shadow-[0_8px_30px_rgb(25,28,33,0.04)] transition-all duration-300">
-<div class="flex items-center gap-5 mb-4 sm:mb-0">
-<div class="w-12 h-12 rounded-full bg-tertiary-container flex items-center justify-center text-on-tertiary-container font-headline font-extrabold text-lg">MC</div>
-<div>
-<h3 class="font-headline font-bold text-on-surface text-lg leading-tight mb-0.5">Marcus Chen</h3>
-<p class="font-body text-sm text-on-surface-variant">STD-24-0042</p>
-</div>
-</div>
-<div class="flex items-center gap-3 sm:gap-6 self-start sm:self-auto w-full sm:w-auto justify-between sm:justify-end">
-<div class="px-3 py-1 bg-primary-fixed rounded-md">
-<span class="font-label text-[10px] uppercase tracking-wider font-bold text-on-primary-fixed-variant">Active</span>
-</div>
-<div class="flex items-center gap-2">
-<button class="flex items-center gap-2 px-4 py-2 rounded-xl text-primary hover:bg-surface-variant transition-colors font-label font-bold text-sm">
-<span class="material-symbols-outlined text-[20px]">qr_code_2</span>
-<span class="hidden xs:inline">View QR</span>
-</button>
-<button class="p-2.5 rounded-xl text-on-surface-variant hover:text-primary hover:bg-surface-variant transition-colors flex items-center justify-center">
-<span class="material-symbols-outlined text-[20px]">edit</span>
-</button>
-</div>
-</div>
-</div>
-<!-- List Item 3 (Surface) -->
-<div class="group flex flex-col sm:flex-row sm:items-center justify-between p-4 sm:p-5 rounded-2xl bg-surface hover:bg-surface-container-lowest hover:shadow-[0_8px_30px_rgb(25,28,33,0.04)] transition-all duration-300">
-<div class="flex items-center gap-5 mb-4 sm:mb-0">
-<div class="w-12 h-12 rounded-full bg-secondary-container flex items-center justify-center text-on-secondary-container font-headline font-extrabold text-lg">SW</div>
-<div>
-<h3 class="font-headline font-bold text-on-surface text-lg leading-tight mb-0.5">Sarah Williams</h3>
-<p class="font-body text-sm text-on-surface-variant">STD-24-0108</p>
-</div>
-</div>
-<div class="flex items-center gap-3 sm:gap-6 self-start sm:self-auto w-full sm:w-auto justify-between sm:justify-end">
-<div class="px-3 py-1 bg-tertiary-fixed rounded-md">
-<span class="font-label text-[10px] uppercase tracking-wider font-bold text-on-tertiary-fixed-variant">Inactive</span>
-</div>
-<div class="flex items-center gap-2">
-<button class="flex items-center gap-2 px-4 py-2 rounded-xl text-primary hover:bg-surface-container-highest transition-colors font-label font-bold text-sm">
-<span class="material-symbols-outlined text-[20px]">qr_code_2</span>
-<span class="hidden xs:inline">View QR</span>
-</button>
-<button class="p-2.5 rounded-xl text-on-surface-variant hover:text-primary hover:bg-surface-container-highest transition-colors flex items-center justify-center">
-<span class="material-symbols-outlined text-[20px]">edit</span>
-</button>
-</div>
-</div>
-</div>
-<!-- List Item 4 (Surface Container Low) -->
-<div class="group flex flex-col sm:flex-row sm:items-center justify-between p-4 sm:p-5 rounded-2xl bg-surface-container-low hover:bg-surface-container-lowest hover:shadow-[0_8px_30px_rgb(25,28,33,0.04)] transition-all duration-300">
-<div class="flex items-center gap-5 mb-4 sm:mb-0">
-<div class="w-12 h-12 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container font-headline font-extrabold text-lg">DP</div>
-<div>
-<h3 class="font-headline font-bold text-on-surface text-lg leading-tight mb-0.5">David Patel</h3>
-<p class="font-body text-sm text-on-surface-variant">STD-24-0221</p>
-</div>
-</div>
-<div class="flex items-center gap-3 sm:gap-6 self-start sm:self-auto w-full sm:w-auto justify-between sm:justify-end">
-<div class="px-3 py-1 bg-primary-fixed rounded-md">
-<span class="font-label text-[10px] uppercase tracking-wider font-bold text-on-primary-fixed-variant">Active</span>
-</div>
-<div class="flex items-center gap-2">
-<button class="flex items-center gap-2 px-4 py-2 rounded-xl text-primary hover:bg-surface-variant transition-colors font-label font-bold text-sm">
-<span class="material-symbols-outlined text-[20px]">qr_code_2</span>
-<span class="hidden xs:inline">View QR</span>
-</button>
-<button class="p-2.5 rounded-xl text-on-surface-variant hover:text-primary hover:bg-surface-variant transition-colors flex items-center justify-center">
-<span class="material-symbols-outlined text-[20px]">edit</span>
-</button>
-</div>
-</div>
-</div>
+<!-- Student List Container -->
+<div id="student-list" class="flex flex-col gap-3">
+    <!-- Dynamic content will be injected here -->
 </div>
 </main>
-<!-- BottomNavBar (Mobile) -->
+
+<!-- Add Student Modal -->
+<div id="add-modal" class="fixed inset-0 z-[100] hidden flex items-center justify-center bg-black/50 backdrop-blur-sm">
+    <div class="bg-surface rounded-2xl p-8 max-w-md w-full shadow-2xl">
+        <h2 class="text-2xl font-manrope font-bold mb-6">Add New Student</h2>
+        <div class="space-y-4">
+            <div>
+                <label class="block text-xs font-bold uppercase tracking-widest text-on-surface-variant mb-2">Student Name</label>
+                <input id="new-student-name" type="text" class="w-full bg-surface-container-highest rounded-xl p-3 border-none" placeholder="Full Name">
+            </div>
+            <div>
+                <label class="block text-xs font-bold uppercase tracking-widest text-on-surface-variant mb-2">Student ID</label>
+                <input id="new-student-id" type="text" class="w-full bg-surface-container-highest rounded-xl p-3 border-none" placeholder="ID Number">
+            </div>
+            <div class="flex gap-4 mt-8">
+                <button onclick="hideAddModal()" class="flex-1 px-4 py-3 rounded-xl bg-surface-container-high font-bold">Cancel</button>
+                <button id="save-btn" onclick="saveStudent()" class="flex-1 px-4 py-3 rounded-xl bg-primary text-on-primary font-bold">Save Student</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    let students = [];
+
+    async function loadStudents() {
+        try {
+            const response = await fetch(SCRIPT_URL);
+            const data = await response.json();
+            students = data.students;
+            renderStudents(students);
+            document.getElementById('total-registered').innerText = `Total Registered: ${students.length}`;
+        } catch (err) {
+            console.error("Failed to load students", err);
+        }
+    }
+
+    function renderStudents(list) {
+        const container = document.getElementById('student-list');
+        container.innerHTML = list.map(student => `
+            <div class="group flex flex-col sm:flex-row sm:items-center justify-between p-4 sm:p-5 rounded-2xl bg-surface hover:bg-surface-container-lowest hover:shadow-[0_8px_30px_rgb(25,28,33,0.04)] transition-all duration-300">
+                <div class="flex items-center gap-5 mb-4 sm:mb-0">
+                    <div class="w-12 h-12 rounded-full bg-secondary-container flex items-center justify-center text-on-secondary-container font-headline font-extrabold text-lg">
+                        ${student.name.split(' ').map(n => n[0]).join('')}
+                    </div>
+                    <div>
+                        <h3 class="font-headline font-bold text-on-surface text-lg leading-tight mb-0.5">${student.name}</h3>
+                        <p class="font-body text-sm text-on-surface-variant">${student.id}</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-3 sm:gap-6 self-start sm:self-auto w-full sm:w-auto justify-between sm:justify-end">
+                    <div class="px-3 py-1 bg-primary-fixed rounded-md">
+                        <span class="font-label text-[10px] uppercase tracking-wider font-bold text-on-primary-fixed-variant">${student.status || 'Active'}</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <button onclick="window.location.href='generator.html?id=${student.id}'" class="flex items-center gap-2 px-4 py-2 rounded-xl text-primary hover:bg-surface-container-highest transition-colors font-label font-bold text-sm">
+                            <span class="material-symbols-outlined text-[20px]">qr_code_2</span>
+                            <span class="hidden xs:inline">View QR</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    function showAddModal() {
+        document.getElementById('add-modal').classList.remove('hidden');
+    }
+
+    function hideAddModal() {
+        document.getElementById('add-modal').classList.add('hidden');
+    }
+
+    async function saveStudent() {
+        const name = document.getElementById('new-student-name').value;
+        const id = document.getElementById('new-student-id').value;
+        const btn = document.getElementById('save-btn');
+        
+        if (!name || !id) return alert("Please fill all fields");
+        
+        btn.disabled = true;
+        btn.innerText = "Saving...";
+
+        try {
+            const response = await fetch(SCRIPT_URL, {
+                method: 'POST',
+                body: JSON.stringify({ action: 'addStudent', name, id })
+            });
+            const result = await response.json();
+            if (result.success) {
+                hideAddModal();
+                loadStudents();
+                document.getElementById('new-student-name').value = '';
+                document.getElementById('new-student-id').value = '';
+            } else {
+                alert("Error: " + result.message);
+            }
+        } catch (err) {
+            alert("Network Error");
+        }
+        
+        btn.disabled = false;
+        btn.innerText = "Save Student";
+    }
+
+    document.getElementById('search-input').addEventListener('input', (e) => {
+        const term = e.target.value.toLowerCase();
+        const filtered = students.filter(s => 
+            s.name.toLowerCase().includes(term) || s.id.toLowerCase().includes(term)
+        );
+        renderStudents(filtered);
+    });
+
+    loadStudents();
+</script>
 <nav class="md:hidden fixed bottom-0 w-full z-50 flex justify-around items-center px-4 py-3 pb-safe bg-white/80 dark:bg-slate-950/80 backdrop-blur-xl shadow-[0_-4px_20px_rgba(0,0,0,0.05)] rounded-t-2xl border-none">
-<!-- Scan -->
-<a class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 hover:text-blue-600 scale-95 active:scale-90 transition-transform" href="#">
+<a class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 hover:text-blue-600 scale-95 active:scale-90 transition-transform" href="client.html">
 <span class="material-symbols-outlined mb-1 text-[24px]">qr_code_scanner</span>
 <span class="font-inter text-[10px] uppercase tracking-widest font-bold">Scan</span>
 </a>
-<!-- Admin -->
-<a class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 hover:text-blue-600 scale-95 active:scale-90 transition-transform" href="#">
+<a class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 hover:text-blue-600 scale-95 active:scale-90 transition-transform" href="index.html">
 <span class="material-symbols-outlined mb-1 text-[24px]">analytics</span>
 <span class="font-inter text-[10px] uppercase tracking-widest font-bold">Admin</span>
 </a>
-<!-- Records (Active representing Students list) -->
-<a class="flex flex-col items-center justify-center text-blue-700 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/30 rounded-xl px-4 py-2 scale-95 active:scale-90 transition-transform" href="#">
+<a class="flex flex-col items-center justify-center text-blue-700 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/30 rounded-xl px-4 py-2 scale-95 active:scale-90 transition-transform" href="students.html">
 <span class="material-symbols-outlined fill mb-1 text-[24px]">format_list_bulleted</span>
 <span class="font-inter text-[10px] uppercase tracking-widest font-bold">Records</span>
 </a>
-<!-- Settings -->
 <a class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 hover:text-blue-600 scale-95 active:scale-90 transition-transform" href="#">
 <span class="material-symbols-outlined mb-1 text-[24px]">settings</span>
 <span class="font-inter text-[10px] uppercase tracking-widest font-bold">Settings</span>

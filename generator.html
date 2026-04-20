@@ -81,17 +81,9 @@
             },
         }
     </script>
-<style>
-        .material-symbols-outlined {
-            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-        }
-    </style>
-<style>
-    body {
-      min-height: max(884px, 100dvh);
-    }
-  </style>
-  </head>
+<script src="config.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+</head>
 <body class="bg-background text-on-surface font-body antialiased flex h-screen overflow-hidden">
 <!-- TopAppBar (Mobile/Tablet Top Anchor) -->
 <header class="bg-slate-50 dark:bg-slate-950 font-manrope font-bold tracking-tight docked full-width top-0 flex justify-between items-center w-full px-6 py-4 fixed z-40 md:hidden shadow-[0_1px_0_0_rgba(0,0,0,0.05)] border-b-0 border-transparent shadow-none" style="background-color: var(--theme-colors-background); border-bottom: 1px solid var(--theme-colors-surface-container-high);">
@@ -123,20 +115,20 @@
 <!-- Navigation Links -->
 <ul class="space-y-2 flex-1">
 <li>
-<a class="flex items-center gap-3 px-4 py-3 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-900 transition-all duration-200 ease-in-out rounded-lg" href="#">
+<a class="flex items-center gap-3 px-4 py-3 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-900 transition-all duration-200 ease-in-out rounded-lg" href="index.html">
 <span class="material-symbols-outlined">dashboard</span>
 <span>Dashboard</span>
 </a>
 </li>
 <li>
-<a class="flex items-center gap-3 px-4 py-3 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-900 transition-all duration-200 ease-in-out rounded-lg" href="#">
+<a class="flex items-center gap-3 px-4 py-3 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-900 transition-all duration-200 ease-in-out rounded-lg" href="students.html">
 <span class="material-symbols-outlined">group</span>
 <span>Students</span>
 </a>
 </li>
 <!-- ACTIVE TAB: Exact Match "QR Generator" -->
 <li>
-<a class="flex items-center gap-3 px-4 py-3 bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 font-bold rounded-lg transition-all duration-200 ease-in-out" href="#">
+<a class="flex items-center gap-3 px-4 py-3 bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 font-bold rounded-lg transition-all duration-200 ease-in-out" href="generator.html">
 <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">qr_code_2</span>
 <span>QR Generator</span>
 </a>
@@ -177,30 +169,16 @@
 <div class="flex flex-col gap-2">
 <label class="font-label text-xs uppercase tracking-widest text-on-surface-variant font-bold" for="student-select">Student Record</label>
 <div class="relative">
-<select class="w-full appearance-none bg-surface-container-highest text-on-surface font-body text-base rounded-lg px-4 py-4 pr-10 focus:bg-surface-container-lowest focus:ring-0 outline-none transition-colors border-0 shadow-sm cursor-pointer hover:bg-surface-container-high" id="student-select">
-<option disabled="" selected="" value="">Select a student...</option>
-<option value="stu_001">Anderson, Sarah (2024-A)</option>
-<option value="stu_002">Chen, Marcus (2024-B)</option>
-<option value="stu_003">Rodriguez, Elena (2024-A)</option>
-<option value="stu_004">Smith, James (2024-C)</option>
+<select onchange="handleSelectChange()" class="w-full appearance-none bg-surface-container-highest text-on-surface font-body text-base rounded-lg px-4 py-4 pr-10 focus:bg-surface-container-lowest focus:ring-0 outline-none transition-colors border-0 shadow-sm cursor-pointer hover:bg-surface-container-high" id="student-select">
+<option disabled="" selected="" value="">Loading students...</option>
 </select>
 <span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-on-surface-variant pointer-events-none">expand_more</span>
 </div>
 </div>
 <!-- Tonal Separator via Spacing -->
 <div class="pt-2 pb-2"></div>
-<!-- Form Field: Bulk Toggle -->
-<div class="flex items-center justify-between p-4 bg-surface-container-highest rounded-lg cursor-pointer hover:bg-surface-container-high transition-colors group">
-<div>
-<div class="font-body font-bold text-on-surface text-sm">Bulk Generation Mode</div>
-<div class="font-body text-xs text-on-surface-variant mt-1">Process entire cohort automatically</div>
-</div>
-<div class="w-12 h-6 bg-surface-dim rounded-full p-1 flex items-center transition-all duration-300 group-hover:bg-outline-variant">
-<div class="w-4 h-4 bg-surface-container-lowest rounded-full shadow-sm"></div>
-</div>
-</div>
 <!-- Primary Action Button -->
-<button class="w-full mt-4 bg-gradient-to-r from-primary to-primary-container text-on-primary font-headline font-bold text-base tracking-wide rounded-lg py-4 px-6 shadow-[0_4px_14px_0_rgba(0,72,141,0.2)] hover:shadow-[0_6px_20px_0_rgba(0,72,141,0.3)] hover:-translate-y-0.5 transition-all duration-200 flex justify-center items-center gap-2">
+<button onclick="generateQR()" class="w-full mt-4 bg-gradient-to-r from-primary to-primary-container text-on-primary font-headline font-bold text-base tracking-wide rounded-lg py-4 px-6 shadow-[0_4px_14px_0_rgba(0,72,141,0.2)] hover:shadow-[0_6px_20px_0_rgba(0,72,141,0.3)] hover:-translate-y-0.5 transition-all duration-200 flex justify-center items-center gap-2">
 <span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">generating_tokens</span>
 <span>Generate Token</span>
 </button>
@@ -217,23 +195,23 @@
 <div class="absolute bottom-4 right-4 w-4 h-4 border-b-2 border-r-2 border-outline-variant/30"></div>
 <div class="text-center mb-8">
 <h3 class="font-label text-xs uppercase tracking-[0.2em] text-on-surface-variant font-bold mb-2">Token Preview</h3>
-<div class="font-headline text-2xl font-bold text-on-surface">Anderson, Sarah</div>
-<div class="font-body text-sm text-primary mt-1">ID: STU-8829-4A</div>
+<div id="preview-name" class="font-headline text-2xl font-bold text-on-surface">No Student Selected</div>
+<div id="preview-id" class="font-body text-sm text-primary mt-1">ID: ----</div>
 </div>
 <!-- QR Code Canvas Container -->
 <div class="bg-surface-container-low p-6 rounded-xl mb-10 flex items-center justify-center relative shadow-sm">
-<!-- Placeholder for actual QR code -->
-<img alt="QR Code" class="w-60 h-60 object-contain rounded-lg mix-blend-multiply opacity-90" data-alt="crisp high contrast square black and white digital qr code pattern centered on clean minimal background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB23IOWwx_AJ9fVvJY-fKIX946GFLC4VxNmUPdatg5ZDjz1GEbFtDuhlTv7r2SnBc2rE1aFMWzUxoS5i8Dtfui88B-6L5qEj0P2ua0r3lbt-v0EELAa7_F5J4r06fGAV3m_fzEWPc-c6yyD7CgwwL82yMU63zaduhCtJi0KPC8TEjU1muMjSoFQ2YWDnsUBdAtKFPdEXl9yCMIF3a0-69wRKAHeSIafgs1phLi_m-MdHp23zItBS92zcVvVwYPblh2KLSaLPNFIDA"/>
-<!-- Scanning Reticle purely decorative -->
+<div id="qrcode" class="w-60 h-60 flex items-center justify-center bg-white rounded-lg">
+    <p class="text-xs text-on-surface-variant">QR will appear here</p>
+</div>
 <div class="absolute inset-4 border border-primary/20 rounded-lg pointer-events-none"></div>
 </div>
 <!-- Export Actions -->
 <div class="w-full max-w-sm flex flex-col gap-3">
-<button class="w-full bg-surface-container-highest text-on-surface font-headline font-bold text-sm tracking-wide rounded-lg py-3 px-6 hover:bg-surface-dim transition-colors flex justify-center items-center gap-2">
+<button onclick="downloadQR()" class="w-full bg-surface-container-highest text-on-surface font-headline font-bold text-sm tracking-wide rounded-lg py-3 px-6 hover:bg-surface-dim transition-colors flex justify-center items-center gap-2">
 <span class="material-symbols-outlined text-[20px]">download</span>
 <span>Download PNG</span>
 </button>
-<button class="w-full text-primary font-headline font-bold text-sm tracking-wide rounded-lg py-3 px-6 hover:bg-surface-container-low transition-colors flex justify-center items-center gap-2">
+<button onclick="window.print()" class="w-full text-primary font-headline font-bold text-sm tracking-wide rounded-lg py-3 px-6 hover:bg-surface-container-low transition-colors flex justify-center items-center gap-2">
 <span class="material-symbols-outlined text-[20px]">print</span>
 <span>Print Matrix</span>
 </button>
@@ -243,18 +221,83 @@
 </div>
 </div>
 </main>
+
+<script>
+    let students = [];
+    let qrcode;
+
+    async function loadStudents() {
+        try {
+            const response = await fetch(SCRIPT_URL);
+            const data = await response.json();
+            students = data.students;
+            
+            const select = document.getElementById('student-select');
+            select.innerHTML = '<option disabled selected value="">Select a student...</option>' + 
+                students.map(s => `<option value="${s.id}">${s.name} (${s.id})</option>`).join('');
+            
+            // Check for URL parameter
+            const urlParams = new URLSearchParams(window.location.search);
+            const idParam = urlParams.get('id');
+            if (idParam) {
+                select.value = idParam;
+                handleSelectChange();
+                generateQR();
+            }
+        } catch (err) {
+            console.error("Failed to load students", err);
+        }
+    }
+
+    function handleSelectChange() {
+        const id = document.getElementById('student-select').value;
+        const student = students.find(s => s.id === id);
+        if (student) {
+            document.getElementById('preview-name').innerText = student.name;
+            document.getElementById('preview-id').innerText = `ID: ${student.id}`;
+        }
+    }
+
+    function generateQR() {
+        const id = document.getElementById('student-select').value;
+        if (!id) return alert("Select a student first");
+        
+        const container = document.getElementById('qrcode');
+        container.innerHTML = '';
+        
+        qrcode = new QRCode(container, {
+            text: id,
+            width: 240,
+            height: 240,
+            colorDark : "#000000",
+            colorLight : "#ffffff",
+            correctLevel : QRCode.CorrectLevel.H
+        });
+    }
+
+    function downloadQR() {
+        const img = document.querySelector('#qrcode img');
+        if (!img) return alert("Generate a QR code first");
+        const link = document.createElement('a');
+        link.download = `QR_${document.getElementById('preview-name').innerText}.png`;
+        link.href = img.src;
+        link.click();
+    }
+
+    loadStudents();
+</script>
+
 <!-- BottomNavBar (Mobile Shell) -->
 <nav class="bg-white/80 dark:bg-slate-950/80 backdrop-blur-xl font-inter text-[10px] uppercase tracking-widest font-bold fixed bottom-0 w-full rounded-t-2xl shadow-[0_-4px_20px_rgba(0,0,0,0.05)] z-50 flex justify-around items-center px-4 py-3 pb-safe md:hidden border-t-0 border-transparent">
-<a class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 hover:text-blue-600 scale-95 active:scale-90 transition-transform gap-1" href="#">
+<a class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 hover:text-blue-600 scale-95 active:scale-90 transition-transform gap-1" href="client.html">
 <span class="material-symbols-outlined text-2xl">qr_code_scanner</span>
 <span>Scan</span>
 </a>
-<!-- ACTIVE TAB: Fallback Intent "Admin" -->
-<a class="flex flex-col items-center justify-center text-blue-700 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/30 rounded-xl px-4 py-2 scale-95 active:scale-90 transition-transform gap-1" href="#">
-<span class="material-symbols-outlined text-2xl" style="font-variation-settings: 'FILL' 1;">analytics</span>
+<a class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 hover:text-blue-600 scale-95 active:scale-90 transition-transform gap-1" href="index.html">
+<span class="material-symbols-outlined text-2xl">analytics</span>
 <span>Admin</span>
 </a>
-<a class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 hover:text-blue-600 scale-95 active:scale-90 transition-transform gap-1" href="#">
+<a class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 hover:text-blue-600 scale-95 active:scale-90 transition-transform gap-1" href="students.html">
 <span class="material-symbols-outlined text-2xl">format_list_bulleted</span>
 <span>Records</span>
 </a>

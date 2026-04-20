@@ -85,12 +85,8 @@
             font-variation-settings: 'FILL' 1;
         }
     </style>
-<style>
-    body {
-      min-height: max(884px, 100dvh);
-    }
-  </style>
-  </head>
+<script src="config.js"></script>
+</head>
 <body class="bg-background text-on-surface font-body antialiased flex h-screen overflow-hidden">
 <!-- NavigationDrawer (Desktop) -->
 <aside class="hidden md:flex h-full w-72 rounded-r-none flex-col p-4 bg-slate-50 dark:bg-slate-950 transition-all duration-200 ease-in-out border-r border-slate-100">
@@ -106,15 +102,15 @@
 </div>
 <!-- Navigation Links -->
 <nav class="flex flex-col gap-2 font-inter text-sm font-medium">
-<a class="flex items-center gap-3 px-4 py-3 bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 font-bold rounded-lg transition-all duration-200 ease-in-out" href="#">
+<a class="flex items-center gap-3 px-4 py-3 bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 font-bold rounded-lg transition-all duration-200 ease-in-out" href="index.html">
 <span class="material-symbols-outlined">dashboard</span>
                 Dashboard
             </a>
-<a class="flex items-center gap-3 px-4 py-3 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-900 rounded-lg transition-all duration-200 ease-in-out" href="#">
+<a class="flex items-center gap-3 px-4 py-3 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-900 rounded-lg transition-all duration-200 ease-in-out" href="students.html">
 <span class="material-symbols-outlined">group</span>
                 Students
             </a>
-<a class="flex items-center gap-3 px-4 py-3 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-900 rounded-lg transition-all duration-200 ease-in-out" href="#">
+<a class="flex items-center gap-3 px-4 py-3 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-900 rounded-lg transition-all duration-200 ease-in-out" href="generator.html">
 <span class="material-symbols-outlined">qr_code_2</span>
                 QR Generator
             </a>
@@ -135,9 +131,10 @@
 <h1 class="text-xl font-manrope font-extrabold tracking-tighter text-blue-800 dark:text-blue-300">Chronograph</h1>
 </div>
 <div class="flex items-center gap-4">
-<div class="md:hidden h-8 w-8 rounded-full overflow-hidden bg-surface-container-highest">
-<img alt="Admin Profile" class="w-full h-full object-cover" data-alt="Professional headshot of an administrative user in soft lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB8PTvGBKM3uOv_o6Wb3zbNQ958k1MTXuhU9AdV4s1FQ4dU52YHT_l1tFkpxixaKVODKCZ0d9r9BSz1q6WVh6-pOsFPpwa0JcYx3xoJxyZv9wKbZFScYny7orPihYCICnB2mDCReE_Q3CAKADU5aXg_jzvumbj1rFl8OlbW-AfBVIoeIePzFjasu0EX9qe9MnAJTjw4p3utO8cTeQAJ2-biwJQaPTDE9FgBCKl3NFAwOd8Cjqht-sUtHKGqQwuH8vAICjdwVeJGnw"/>
-</div>
+    <button onclick="window.location.href='client.html'" class="bg-primary text-on-primary px-4 py-2 rounded-lg text-sm font-bold flex items-center gap-2">
+        <span class="material-symbols-outlined text-sm">qr_code_scanner</span>
+        Open Scanner
+    </button>
 </div>
 </header>
 <!-- Dashboard Content -->
@@ -155,8 +152,8 @@
 <h2 class="font-headline text-3xl md:text-4xl font-extrabold text-on-surface">Architectural Design 101</h2>
 <p class="font-body text-on-surface-variant mt-1">Prof. Sterling • Room 402 • 09:00 AM - 11:30 AM</p>
 </div>
-<button class="bg-gradient-to-r from-primary to-primary-container text-on-primary px-6 py-3 rounded-lg font-label font-bold tracking-wide hover:opacity-90 transition-opacity">
-                    End Session
+<button onclick="loadStats()" class="bg-surface-container-highest px-6 py-3 rounded-lg font-label font-bold tracking-wide hover:opacity-90 transition-opacity">
+                    Refresh Stats
                 </button>
 </div>
 <!-- Stats Bento Grid -->
@@ -167,30 +164,22 @@
 <div class="z-10">
 <p class="font-label text-sm uppercase tracking-[0.1em] text-on-surface-variant mb-2">Total Attendance</p>
 <div class="flex items-baseline gap-2">
-<span class="font-headline text-7xl font-extrabold text-primary tracking-tighter">142</span>
-<span class="font-headline text-3xl text-outline">/ 150</span>
+<span id="stat-present" class="font-headline text-7xl font-extrabold text-primary tracking-tighter">0</span>
+<span id="stat-total" class="font-headline text-3xl text-outline">/ 0</span>
 </div>
 </div>
 <div class="mt-8 flex gap-6 z-10">
 <div class="bg-primary-fixed px-4 py-2 rounded-lg">
 <p class="font-label text-xs uppercase tracking-wider text-on-primary-fixed-variant mb-1">Present</p>
-<p class="font-headline text-xl font-bold text-on-primary-fixed">94.6%</p>
-</div>
-<div class="bg-tertiary-fixed px-4 py-2 rounded-lg">
-<p class="font-label text-xs uppercase tracking-wider text-on-tertiary-fixed-variant mb-1">Absent</p>
-<p class="font-headline text-xl font-bold text-on-tertiary-fixed">5.4%</p>
+<p id="stat-percent" class="font-headline text-xl font-bold text-on-primary-fixed">0%</p>
 </div>
 </div>
 </div>
 <!-- Secondary Stats -->
 <div class="flex flex-col gap-6">
 <div class="bg-surface-container-low rounded-xl p-6 flex-1 flex flex-col justify-center">
-<p class="font-label text-xs uppercase tracking-[0.1em] text-on-surface-variant mb-2">Scanning Velocity</p>
-<p class="font-headline text-3xl font-extrabold text-on-surface">12 <span class="text-lg text-outline font-medium">/ min</span></p>
-</div>
-<div class="bg-surface-container-low rounded-xl p-6 flex-1 flex flex-col justify-center">
-<p class="font-label text-xs uppercase tracking-[0.1em] text-on-surface-variant mb-2">Exceptions</p>
-<p class="font-headline text-3xl font-extrabold text-tertiary">3 <span class="text-sm font-body text-outline font-normal align-middle ml-2">Invalid Scans</span></p>
+<p class="font-label text-xs uppercase tracking-[0.1em] text-on-surface-variant mb-2">Active Students</p>
+<p id="stat-active" class="font-headline text-3xl font-extrabold text-on-surface">0</p>
 </div>
 </div>
 </div>
@@ -198,90 +187,87 @@
 <div class="mt-12">
 <div class="flex justify-between items-center mb-6">
 <h3 class="font-headline text-xl font-bold text-on-surface">Recent Scans</h3>
-<a class="font-label text-sm text-primary font-bold hover:text-primary-container transition-colors" href="#">View Full Ledger</a>
+<a class="font-label text-sm text-primary font-bold hover:text-primary-container transition-colors" href="students.html">View Full Ledger</a>
 </div>
 <div class="bg-surface-container-lowest rounded-xl p-2 md:p-6 overflow-hidden">
-<div class="space-y-3">
-<!-- List Item 1 -->
-<div class="flex items-center justify-between p-4 bg-surface rounded-lg hover:bg-surface-container-low transition-colors group">
-<div class="flex items-center gap-4">
-<div class="h-10 w-10 rounded-full bg-secondary-fixed flex items-center justify-center text-on-secondary-fixed font-bold font-headline">
-                                    EC
-                                </div>
-<div>
-<p class="font-body font-bold text-on-surface">Elena Castillo</p>
-<p class="font-label text-xs text-on-surface-variant">ID: 2023-8492</p>
-</div>
-</div>
-<div class="flex flex-col items-end">
-<span class="px-3 py-1 bg-primary-fixed text-on-primary-fixed-variant rounded-full font-label text-xs font-bold uppercase tracking-wider mb-1">Present</span>
-<p class="font-label text-xs text-outline">Just now</p>
-</div>
-</div>
-<!-- List Item 2 -->
-<div class="flex items-center justify-between p-4 bg-surface rounded-lg hover:bg-surface-container-low transition-colors group">
-<div class="flex items-center gap-4">
-<div class="h-10 w-10 rounded-full bg-secondary-fixed flex items-center justify-center text-on-secondary-fixed font-bold font-headline">
-                                    MR
-                                </div>
-<div>
-<p class="font-body font-bold text-on-surface">Marcus Reed</p>
-<p class="font-label text-xs text-on-surface-variant">ID: 2023-1104</p>
-</div>
-</div>
-<div class="flex flex-col items-end">
-<span class="px-3 py-1 bg-primary-fixed text-on-primary-fixed-variant rounded-full font-label text-xs font-bold uppercase tracking-wider mb-1">Present</span>
-<p class="font-label text-xs text-outline">1 min ago</p>
-</div>
-</div>
-<!-- List Item 3 -->
-<div class="flex items-center justify-between p-4 bg-surface rounded-lg hover:bg-surface-container-low transition-colors group">
-<div class="flex items-center gap-4">
-<div class="h-10 w-10 rounded-full bg-tertiary-fixed flex items-center justify-center text-on-tertiary-fixed font-bold font-headline">
-                                    SJ
-                                </div>
-<div>
-<p class="font-body font-bold text-on-surface">Sarah Jenkins</p>
-<p class="font-label text-xs text-on-surface-variant">ID: 2023-5521</p>
-</div>
-</div>
-<div class="flex flex-col items-end">
-<span class="px-3 py-1 bg-tertiary-fixed text-on-tertiary-fixed-variant rounded-full font-label text-xs font-bold uppercase tracking-wider mb-1">Late</span>
-<p class="font-label text-xs text-outline">3 mins ago</p>
-</div>
-</div>
-<!-- List Item 4 -->
-<div class="flex items-center justify-between p-4 bg-surface rounded-lg hover:bg-surface-container-low transition-colors group">
-<div class="flex items-center gap-4">
-<div class="h-10 w-10 rounded-full bg-secondary-fixed flex items-center justify-center text-on-secondary-fixed font-bold font-headline">
-                                    DK
-                                </div>
-<div>
-<p class="font-body font-bold text-on-surface">David Kim</p>
-<p class="font-label text-xs text-on-surface-variant">ID: 2023-9932</p>
-</div>
-</div>
-<div class="flex flex-col items-end">
-<span class="px-3 py-1 bg-primary-fixed text-on-primary-fixed-variant rounded-full font-label text-xs font-bold uppercase tracking-wider mb-1">Present</span>
-<p class="font-label text-xs text-outline">5 mins ago</p>
-</div>
-</div>
+<div id="recent-scans" class="space-y-3">
+    <!-- Dynamic scans will be injected here -->
 </div>
 </div>
 </div>
 </main>
 </div>
+
+<script>
+    async function loadStats() {
+        try {
+            const response = await fetch(SCRIPT_URL);
+            const data = await response.json();
+            
+            const total = data.stats.total;
+            const present = data.stats.present;
+            const percent = total > 0 ? Math.round((present / total) * 100) : 0;
+            
+            document.getElementById('stat-present').innerText = present;
+            document.getElementById('stat-total').innerText = `/ ${total}`;
+            document.getElementById('stat-percent').innerText = `${percent}%`;
+            document.getElementById('stat-active').innerText = total;
+            
+            renderRecentScans(data.attendance, data.students);
+        } catch (err) {
+            console.error("Failed to load stats", err);
+        }
+    }
+
+    function renderRecentScans(attendance, students) {
+        const container = document.getElementById('recent-scans');
+        // Sort attendance by timestamp descending and take last 5
+        const recent = attendance.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp)).slice(0, 5);
+        
+        container.innerHTML = recent.map(scan => {
+            const student = students.find(s => s.id === scan.studentid) || { name: 'Unknown Student', id: scan.studentid };
+            const time = new Date(scan.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            
+            return `
+                <div class="flex items-center justify-between p-4 bg-surface rounded-lg hover:bg-surface-container-low transition-colors group">
+                    <div class="flex items-center gap-4">
+                        <div class="h-10 w-10 rounded-full bg-secondary-fixed flex items-center justify-center text-on-secondary-fixed font-bold font-headline">
+                            ${student.name.split(' ').map(n => n[0]).join('')}
+                        </div>
+                        <div>
+                            <p class="font-body font-bold text-on-surface">${student.name}</p>
+                            <p class="font-label text-xs text-on-surface-variant">ID: ${student.id}</p>
+                        </div>
+                    </div>
+                    <div class="flex flex-col items-end">
+                        <span class="px-3 py-1 bg-primary-fixed text-on-primary-fixed-variant rounded-full font-label text-xs font-bold uppercase tracking-wider mb-1">Present</span>
+                        <p class="font-label text-xs text-outline">${time}</p>
+                    </div>
+                </div>
+            `;
+        }).join('');
+        
+        if (recent.length === 0) {
+            container.innerHTML = `<p class="text-center py-8 text-on-surface-variant">No scans recorded today.</p>`;
+        }
+    }
+
+    // Refresh every 30 seconds
+    setInterval(loadStats, 30000);
+    loadStats();
+</script>
+
 <!-- BottomNavBar (Mobile) -->
 <nav class="md:hidden fixed bottom-0 w-full z-50 flex justify-around items-center px-4 py-3 pb-safe bg-white/80 dark:bg-slate-950/80 backdrop-blur-xl rounded-t-2xl shadow-[0_-4px_20px_rgba(0,0,0,0.05)]">
-<a class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 scale-95 active:scale-90 transition-transform hover:text-blue-600" href="#">
+<a class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 scale-95 active:scale-90 transition-transform hover:text-blue-600" href="client.html">
 <span class="material-symbols-outlined mb-1">qr_code_scanner</span>
 <span class="font-inter text-[10px] uppercase tracking-widest font-bold">Scan</span>
 </a>
-<a class="flex flex-col items-center justify-center text-blue-700 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/30 rounded-xl px-3 py-1 scale-95 active:scale-90 transition-transform" href="#">
+<a class="flex flex-col items-center justify-center text-blue-700 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/30 rounded-xl px-3 py-1 scale-95 active:scale-90 transition-transform" href="index.html">
 <span class="material-symbols-outlined filled mb-1">analytics</span>
 <span class="font-inter text-[10px] uppercase tracking-widest font-bold">Admin</span>
 </a>
-<a class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 scale-95 active:scale-90 transition-transform hover:text-blue-600" href="#">
+<a class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 scale-95 active:scale-90 transition-transform hover:text-blue-600" href="students.html">
 <span class="material-symbols-outlined mb-1">format_list_bulleted</span>
 <span class="font-inter text-[10px] uppercase tracking-widest font-bold">Records</span>
 </a>
