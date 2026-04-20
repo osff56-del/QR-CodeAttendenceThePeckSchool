@@ -170,10 +170,17 @@
 
         html5QrCode.start({ facingMode: "environment" }, config, onScanSuccess)
             .catch(err => {
-                console.error(err);
-                statusText.innerHTML = `<span class="text-error font-bold">Camera Error:</span> Please ensure you have granted camera permissions.`;
-                if (startBtn) startBtn.style.display = 'flex';
-                if (startBtn) startBtn.innerText = "Retry Camera";
+                console.error("Camera Start Error:", err);
+                statusText.innerHTML = `<span class="text-error font-bold">Camera Error:</span><br><span class="text-xs">${err}</span>`;
+                if (startBtn) {
+                    startBtn.style.display = 'flex';
+                    startBtn.innerText = "Try Again";
+                }
+                
+                // Extra help for common errors
+                if (err && (err.name === 'NotAllowedError' || err === 'NotAllowedError')) {
+                    statusText.innerHTML += `<br><br><span class="text-xs text-primary font-bold">Tip: Check the lock icon in your address bar and allow camera access.</span>`;
+                }
             });
     }
 
