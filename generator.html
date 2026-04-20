@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Chronograph - QR Generator</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Manrope:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "error": "#ba1a1a",
+                        "inverse-on-surface": "#eff0f8",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary-container": "#cadcff",
+                        "primary": "#00488d",
+                        "on-error-container": "#93000a",
+                        "on-tertiary-container": "#ffd1bc",
+                        "on-primary": "#ffffff",
+                        "tertiary-fixed-dim": "#ffb691",
+                        "background": "#f9f9ff",
+                        "on-secondary-fixed-variant": "#324769",
+                        "primary-container": "#005fb8",
+                        "surface-dim": "#d8dae2",
+                        "secondary-fixed": "#d6e3ff",
+                        "surface-container": "#ecedf6",
+                        "outline": "#727783",
+                        "error-container": "#ffdad6",
+                        "surface-container-low": "#f2f3fb",
+                        "surface-bright": "#f9f9ff",
+                        "surface-container-highest": "#e1e2ea",
+                        "secondary": "#4a5f83",
+                        "secondary-fixed-dim": "#b2c7f0",
+                        "surface-container-high": "#e7e8f0",
+                        "secondary-container": "#c0d5ff",
+                        "on-secondary": "#ffffff",
+                        "surface-tint": "#005db5",
+                        "outline-variant": "#c2c6d4",
+                        "tertiary-container": "#a04401",
+                        "on-primary-fixed-variant": "#00468b",
+                        "on-secondary-fixed": "#011b3c",
+                        "on-secondary-container": "#475c7f",
+                        "on-primary-fixed": "#001b3d",
+                        "on-tertiary-fixed-variant": "#783100",
+                        "on-surface": "#191c21",
+                        "surface": "#f9f9ff",
+                        "on-tertiary-fixed": "#341100",
+                        "on-tertiary": "#ffffff",
+                        "on-error": "#ffffff",
+                        "on-background": "#191c21",
+                        "tertiary": "#7b3200",
+                        "inverse-primary": "#a8c8ff",
+                        "tertiary-fixed": "#ffdbcb",
+                        "primary-fixed-dim": "#a8c8ff",
+                        "surface-variant": "#e1e2ea",
+                        "inverse-surface": "#2e3036",
+                        "on-surface-variant": "#424752",
+                        "primary-fixed": "#d6e3ff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "fontFamily": {
+                        "headline": ["Manrope"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-surface font-body antialiased flex h-screen overflow-hidden">
+<!-- TopAppBar (Mobile/Tablet Top Anchor) -->
+<header class="bg-slate-50 dark:bg-slate-950 font-manrope font-bold tracking-tight docked full-width top-0 flex justify-between items-center w-full px-6 py-4 fixed z-40 md:hidden shadow-[0_1px_0_0_rgba(0,0,0,0.05)] border-b-0 border-transparent shadow-none" style="background-color: var(--theme-colors-background); border-bottom: 1px solid var(--theme-colors-surface-container-high);">
+<div class="flex items-center gap-4">
+<button class="text-blue-700 dark:text-blue-400 p-2 hover:bg-slate-200/50 dark:hover:bg-slate-800/50 rounded-full transition-colors duration-300">
+<span class="material-symbols-outlined text-2xl">menu</span>
+</button>
+<h1 class="text-xl font-manrope font-extrabold tracking-tighter text-blue-800 dark:text-blue-300">Chronograph</h1>
+</div>
+<div class="w-8 h-8 rounded-full bg-primary-container flex items-center justify-center text-on-primary font-bold text-sm">
+            AP
+        </div>
+</header>
+<!-- NavigationDrawer (Desktop Shell) -->
+<nav class="bg-slate-50 dark:bg-slate-950 font-inter text-sm font-medium h-full w-72 rounded-r-none fixed inset-y-0 left-0 z-50 flex-col p-4 hidden md:flex border-r-0 border-transparent relative" style="background-color: var(--theme-colors-surface-container-low);">
+<!-- Drawer Header -->
+<div class="mb-10 px-4 mt-6">
+<h1 class="text-2xl font-manrope font-extrabold tracking-tighter text-blue-800 dark:text-blue-300 mb-8">Chronograph</h1>
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-full bg-primary-container flex items-center justify-center text-on-primary font-bold text-lg shadow-sm">
+                    A
+                </div>
+<div>
+<div class="font-bold text-on-surface text-base">Attendance Admin</div>
+<div class="text-on-surface-variant text-xs mt-0.5 uppercase tracking-widest">Institutional Ledger</div>
+</div>
+</div>
+</div>
+<!-- Navigation Links -->
+<ul class="space-y-2 flex-1">
+<li>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-900 transition-all duration-200 ease-in-out rounded-lg" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span>Dashboard</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-900 transition-all duration-200 ease-in-out rounded-lg" href="#">
+<span class="material-symbols-outlined">group</span>
+<span>Students</span>
+</a>
+</li>
+<!-- ACTIVE TAB: Exact Match "QR Generator" -->
+<li>
+<a class="flex items-center gap-3 px-4 py-3 bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 font-bold rounded-lg transition-all duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">qr_code_2</span>
+<span>QR Generator</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-900 transition-all duration-200 ease-in-out rounded-lg" href="#">
+<span class="material-symbols-outlined">history</span>
+<span>History</span>
+</a>
+</li>
+</ul>
+</nav>
+<!-- Main Content Canvas -->
+<main class="flex-1 overflow-y-auto bg-surface pt-20 md:pt-0 pb-24 md:pb-0 relative">
+<!-- Desktop Contextual Header -->
+<div class="hidden md:flex justify-between items-center px-12 py-8 w-full sticky top-0 bg-surface/90 backdrop-blur-md z-30">
+<h2 class="font-headline text-3xl font-bold text-on-surface tracking-tight">Identity Token Provisioning</h2>
+<div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center text-on-primary font-bold text-sm shadow-sm cursor-pointer hover:bg-primary transition-colors">
+                AP
+            </div>
+</div>
+<div class="px-6 md:px-12 py-6 max-w-7xl mx-auto w-full">
+<div class="md:hidden mb-8">
+<h2 class="font-headline text-2xl font-bold text-on-surface tracking-tight">Identity Provisioning</h2>
+<p class="font-body text-sm text-on-surface-variant mt-2">Generate and manage secure attendance access tokens.</p>
+</div>
+<!-- Asymmetric Grid Layout -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+<!-- Left Panel: Controls (Span 5) -->
+<div class="lg:col-span-5 flex flex-col gap-6">
+<!-- Selection Card -->
+<div class="bg-surface-container-low p-8 rounded-xl flex flex-col gap-6">
+<div>
+<h3 class="font-headline text-lg font-bold text-on-surface mb-1">Target Identity</h3>
+<p class="font-body text-sm text-on-surface-variant">Select a profile to encode a new access matrix.</p>
+</div>
+<!-- Form Field: Student Select -->
+<div class="flex flex-col gap-2">
+<label class="font-label text-xs uppercase tracking-widest text-on-surface-variant font-bold" for="student-select">Student Record</label>
+<div class="relative">
+<select class="w-full appearance-none bg-surface-container-highest text-on-surface font-body text-base rounded-lg px-4 py-4 pr-10 focus:bg-surface-container-lowest focus:ring-0 outline-none transition-colors border-0 shadow-sm cursor-pointer hover:bg-surface-container-high" id="student-select">
+<option disabled="" selected="" value="">Select a student...</option>
+<option value="stu_001">Anderson, Sarah (2024-A)</option>
+<option value="stu_002">Chen, Marcus (2024-B)</option>
+<option value="stu_003">Rodriguez, Elena (2024-A)</option>
+<option value="stu_004">Smith, James (2024-C)</option>
+</select>
+<span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-on-surface-variant pointer-events-none">expand_more</span>
+</div>
+</div>
+<!-- Tonal Separator via Spacing -->
+<div class="pt-2 pb-2"></div>
+<!-- Form Field: Bulk Toggle -->
+<div class="flex items-center justify-between p-4 bg-surface-container-highest rounded-lg cursor-pointer hover:bg-surface-container-high transition-colors group">
+<div>
+<div class="font-body font-bold text-on-surface text-sm">Bulk Generation Mode</div>
+<div class="font-body text-xs text-on-surface-variant mt-1">Process entire cohort automatically</div>
+</div>
+<div class="w-12 h-6 bg-surface-dim rounded-full p-1 flex items-center transition-all duration-300 group-hover:bg-outline-variant">
+<div class="w-4 h-4 bg-surface-container-lowest rounded-full shadow-sm"></div>
+</div>
+</div>
+<!-- Primary Action Button -->
+<button class="w-full mt-4 bg-gradient-to-r from-primary to-primary-container text-on-primary font-headline font-bold text-base tracking-wide rounded-lg py-4 px-6 shadow-[0_4px_14px_0_rgba(0,72,141,0.2)] hover:shadow-[0_6px_20px_0_rgba(0,72,141,0.3)] hover:-translate-y-0.5 transition-all duration-200 flex justify-center items-center gap-2">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">generating_tokens</span>
+<span>Generate Token</span>
+</button>
+</div>
+</div>
+<!-- Right Panel: Preview & Export (Span 7) -->
+<div class="lg:col-span-7">
+<!-- Preview Card (Elevated via Tonal Layering) -->
+<div class="bg-surface-container-lowest rounded-xl p-10 flex flex-col items-center justify-center min-h-[500px] relative">
+<!-- Architectural Corner Accents -->
+<div class="absolute top-4 left-4 w-4 h-4 border-t-2 border-l-2 border-outline-variant/30"></div>
+<div class="absolute top-4 right-4 w-4 h-4 border-t-2 border-r-2 border-outline-variant/30"></div>
+<div class="absolute bottom-4 left-4 w-4 h-4 border-b-2 border-l-2 border-outline-variant/30"></div>
+<div class="absolute bottom-4 right-4 w-4 h-4 border-b-2 border-r-2 border-outline-variant/30"></div>
+<div class="text-center mb-8">
+<h3 class="font-label text-xs uppercase tracking-[0.2em] text-on-surface-variant font-bold mb-2">Token Preview</h3>
+<div class="font-headline text-2xl font-bold text-on-surface">Anderson, Sarah</div>
+<div class="font-body text-sm text-primary mt-1">ID: STU-8829-4A</div>
+</div>
+<!-- QR Code Canvas Container -->
+<div class="bg-surface-container-low p-6 rounded-xl mb-10 flex items-center justify-center relative shadow-sm">
+<!-- Placeholder for actual QR code -->
+<img alt="QR Code" class="w-60 h-60 object-contain rounded-lg mix-blend-multiply opacity-90" data-alt="crisp high contrast square black and white digital qr code pattern centered on clean minimal background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB23IOWwx_AJ9fVvJY-fKIX946GFLC4VxNmUPdatg5ZDjz1GEbFtDuhlTv7r2SnBc2rE1aFMWzUxoS5i8Dtfui88B-6L5qEj0P2ua0r3lbt-v0EELAa7_F5J4r06fGAV3m_fzEWPc-c6yyD7CgwwL82yMU63zaduhCtJi0KPC8TEjU1muMjSoFQ2YWDnsUBdAtKFPdEXl9yCMIF3a0-69wRKAHeSIafgs1phLi_m-MdHp23zItBS92zcVvVwYPblh2KLSaLPNFIDA"/>
+<!-- Scanning Reticle purely decorative -->
+<div class="absolute inset-4 border border-primary/20 rounded-lg pointer-events-none"></div>
+</div>
+<!-- Export Actions -->
+<div class="w-full max-w-sm flex flex-col gap-3">
+<button class="w-full bg-surface-container-highest text-on-surface font-headline font-bold text-sm tracking-wide rounded-lg py-3 px-6 hover:bg-surface-dim transition-colors flex justify-center items-center gap-2">
+<span class="material-symbols-outlined text-[20px]">download</span>
+<span>Download PNG</span>
+</button>
+<button class="w-full text-primary font-headline font-bold text-sm tracking-wide rounded-lg py-3 px-6 hover:bg-surface-container-low transition-colors flex justify-center items-center gap-2">
+<span class="material-symbols-outlined text-[20px]">print</span>
+<span>Print Matrix</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar (Mobile Shell) -->
+<nav class="bg-white/80 dark:bg-slate-950/80 backdrop-blur-xl font-inter text-[10px] uppercase tracking-widest font-bold fixed bottom-0 w-full rounded-t-2xl shadow-[0_-4px_20px_rgba(0,0,0,0.05)] z-50 flex justify-around items-center px-4 py-3 pb-safe md:hidden border-t-0 border-transparent">
+<a class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 hover:text-blue-600 scale-95 active:scale-90 transition-transform gap-1" href="#">
+<span class="material-symbols-outlined text-2xl">qr_code_scanner</span>
+<span>Scan</span>
+</a>
+<!-- ACTIVE TAB: Fallback Intent "Admin" -->
+<a class="flex flex-col items-center justify-center text-blue-700 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/30 rounded-xl px-4 py-2 scale-95 active:scale-90 transition-transform gap-1" href="#">
+<span class="material-symbols-outlined text-2xl" style="font-variation-settings: 'FILL' 1;">analytics</span>
+<span>Admin</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 hover:text-blue-600 scale-95 active:scale-90 transition-transform gap-1" href="#">
+<span class="material-symbols-outlined text-2xl">format_list_bulleted</span>
+<span>Records</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 hover:text-blue-600 scale-95 active:scale-90 transition-transform gap-1" href="#">
+<span class="material-symbols-outlined text-2xl">settings</span>
+<span>Settings</span>
+</a>
+</nav>
+</body></html>

@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Chronograph - Admin Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "error": "#ba1a1a",
+                        "inverse-on-surface": "#eff0f8",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary-container": "#cadcff",
+                        "primary": "#00488d",
+                        "on-error-container": "#93000a",
+                        "on-tertiary-container": "#ffd1bc",
+                        "on-primary": "#ffffff",
+                        "tertiary-fixed-dim": "#ffb691",
+                        "background": "#f9f9ff",
+                        "on-secondary-fixed-variant": "#324769",
+                        "primary-container": "#005fb8",
+                        "surface-dim": "#d8dae2",
+                        "secondary-fixed": "#d6e3ff",
+                        "surface-container": "#ecedf6",
+                        "outline": "#727783",
+                        "error-container": "#ffdad6",
+                        "surface-container-low": "#f2f3fb",
+                        "surface-bright": "#f9f9ff",
+                        "surface-container-highest": "#e1e2ea",
+                        "secondary": "#4a5f83",
+                        "secondary-fixed-dim": "#b2c7f0",
+                        "surface-container-high": "#e7e8f0",
+                        "secondary-container": "#c0d5ff",
+                        "on-secondary": "#ffffff",
+                        "surface-tint": "#005db5",
+                        "outline-variant": "#c2c6d4",
+                        "tertiary-container": "#a04401",
+                        "on-primary-fixed-variant": "#00468b",
+                        "on-secondary-fixed": "#011b3c",
+                        "on-secondary-container": "#475c7f",
+                        "on-primary-fixed": "#001b3d",
+                        "on-tertiary-fixed-variant": "#783100",
+                        "on-surface": "#191c21",
+                        "surface": "#f9f9ff",
+                        "on-tertiary-fixed": "#341100",
+                        "on-tertiary": "#ffffff",
+                        "on-error": "#ffffff",
+                        "on-background": "#191c21",
+                        "tertiary": "#7b3200",
+                        "inverse-primary": "#a8c8ff",
+                        "tertiary-fixed": "#ffdbcb",
+                        "primary-fixed-dim": "#a8c8ff",
+                        "surface-variant": "#e1e2ea",
+                        "inverse-surface": "#2e3036",
+                        "on-surface-variant": "#424752",
+                        "primary-fixed": "#d6e3ff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "fontFamily": {
+                        "headline": ["Manrope", "sans-serif"],
+                        "body": ["Inter", "sans-serif"],
+                        "label": ["Inter", "sans-serif"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .material-symbols-outlined.filled {
+            font-variation-settings: 'FILL' 1;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-surface font-body antialiased flex h-screen overflow-hidden">
+<!-- NavigationDrawer (Desktop) -->
+<aside class="hidden md:flex h-full w-72 rounded-r-none flex-col p-4 bg-slate-50 dark:bg-slate-950 transition-all duration-200 ease-in-out border-r border-slate-100">
+<!-- Header Profile -->
+<div class="flex items-center gap-4 mb-8 p-2">
+<div class="h-12 w-12 rounded-full overflow-hidden bg-surface-container-highest flex-shrink-0">
+<img alt="Admin User" class="w-full h-full object-cover" data-alt="Professional headshot of an administrative user in soft lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBrEdg8_bWLbVZTBfphJq-xkfnWkyewFJX7LLepriwF9wP0CrTwTOFyFQwhugUlRru1jApdbjgAXhVfhw2n6fIyv-no42D7SdO87w8EQPpKpcQIrUxx1h5XtZqkFW1ywuIbljEIjB-BysgWIb3xSvtmMn6LJNo0NluB8LVmJeSPMCjrR4wJHbR8gzqAFrULCF9aIh1dwpeuME__-A-_ynBIRxyYQwnBpgtULArEkGmLvFgKD_xoXnf6R_2onRjqyRSsVW26PxCZ0A"/>
+</div>
+<div>
+<h2 class="text-blue-800 font-manrope font-bold">Attendance Admin</h2>
+<p class="font-inter text-xs text-on-surface-variant">Institutional Ledger</p>
+</div>
+</div>
+<!-- Navigation Links -->
+<nav class="flex flex-col gap-2 font-inter text-sm font-medium">
+<a class="flex items-center gap-3 px-4 py-3 bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 font-bold rounded-lg transition-all duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+                Dashboard
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-900 rounded-lg transition-all duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined">group</span>
+                Students
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-900 rounded-lg transition-all duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined">qr_code_2</span>
+                QR Generator
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-900 rounded-lg transition-all duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined">history</span>
+                History
+            </a>
+</nav>
+</aside>
+<!-- Main Content Area -->
+<div class="flex-1 flex flex-col h-full relative overflow-y-auto">
+<!-- TopAppBar -->
+<header class="flex justify-between items-center w-full px-6 py-4 bg-slate-50 dark:bg-slate-950 sticky top-0 z-40 bg-slate-100 dark:bg-slate-900 transition-colors duration-300">
+<div class="flex items-center gap-4">
+<button class="md:hidden text-slate-500 dark:text-slate-400 hover:bg-slate-200/50 dark:hover:bg-slate-800/50 p-2 rounded-full transition-colors duration-300">
+<span class="material-symbols-outlined">menu</span>
+</button>
+<h1 class="text-xl font-manrope font-extrabold tracking-tighter text-blue-800 dark:text-blue-300">Chronograph</h1>
+</div>
+<div class="flex items-center gap-4">
+<div class="md:hidden h-8 w-8 rounded-full overflow-hidden bg-surface-container-highest">
+<img alt="Admin Profile" class="w-full h-full object-cover" data-alt="Professional headshot of an administrative user in soft lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB8PTvGBKM3uOv_o6Wb3zbNQ958k1MTXuhU9AdV4s1FQ4dU52YHT_l1tFkpxixaKVODKCZ0d9r9BSz1q6WVh6-pOsFPpwa0JcYx3xoJxyZv9wKbZFScYny7orPihYCICnB2mDCReE_Q3CAKADU5aXg_jzvumbj1rFl8OlbW-AfBVIoeIePzFjasu0EX9qe9MnAJTjw4p3utO8cTeQAJ2-biwJQaPTDE9FgBCKl3NFAwOd8Cjqht-sUtHKGqQwuH8vAICjdwVeJGnw"/>
+</div>
+</div>
+</header>
+<!-- Dashboard Content -->
+<main class="flex-1 p-6 lg:p-10 max-w-7xl mx-auto w-full space-y-8 pb-24 md:pb-10">
+<!-- Header Section -->
+<div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-4 mb-8">
+<div>
+<div class="flex items-center gap-2 mb-2">
+<span class="relative flex h-3 w-3">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+<span class="relative inline-flex rounded-full h-3 w-3 bg-primary"></span>
+</span>
+<span class="font-label text-sm uppercase tracking-widest text-primary font-bold">Live Session Active</span>
+</div>
+<h2 class="font-headline text-3xl md:text-4xl font-extrabold text-on-surface">Architectural Design 101</h2>
+<p class="font-body text-on-surface-variant mt-1">Prof. Sterling • Room 402 • 09:00 AM - 11:30 AM</p>
+</div>
+<button class="bg-gradient-to-r from-primary to-primary-container text-on-primary px-6 py-3 rounded-lg font-label font-bold tracking-wide hover:opacity-90 transition-opacity">
+                    End Session
+                </button>
+</div>
+<!-- Stats Bento Grid -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<!-- Main Stat Card -->
+<div class="col-span-1 md:col-span-2 bg-surface-container-lowest rounded-xl p-8 flex flex-col justify-between relative overflow-hidden">
+<div class="absolute -right-10 -top-10 w-64 h-64 bg-primary-fixed opacity-20 rounded-full blur-3xl"></div>
+<div class="z-10">
+<p class="font-label text-sm uppercase tracking-[0.1em] text-on-surface-variant mb-2">Total Attendance</p>
+<div class="flex items-baseline gap-2">
+<span class="font-headline text-7xl font-extrabold text-primary tracking-tighter">142</span>
+<span class="font-headline text-3xl text-outline">/ 150</span>
+</div>
+</div>
+<div class="mt-8 flex gap-6 z-10">
+<div class="bg-primary-fixed px-4 py-2 rounded-lg">
+<p class="font-label text-xs uppercase tracking-wider text-on-primary-fixed-variant mb-1">Present</p>
+<p class="font-headline text-xl font-bold text-on-primary-fixed">94.6%</p>
+</div>
+<div class="bg-tertiary-fixed px-4 py-2 rounded-lg">
+<p class="font-label text-xs uppercase tracking-wider text-on-tertiary-fixed-variant mb-1">Absent</p>
+<p class="font-headline text-xl font-bold text-on-tertiary-fixed">5.4%</p>
+</div>
+</div>
+</div>
+<!-- Secondary Stats -->
+<div class="flex flex-col gap-6">
+<div class="bg-surface-container-low rounded-xl p-6 flex-1 flex flex-col justify-center">
+<p class="font-label text-xs uppercase tracking-[0.1em] text-on-surface-variant mb-2">Scanning Velocity</p>
+<p class="font-headline text-3xl font-extrabold text-on-surface">12 <span class="text-lg text-outline font-medium">/ min</span></p>
+</div>
+<div class="bg-surface-container-low rounded-xl p-6 flex-1 flex flex-col justify-center">
+<p class="font-label text-xs uppercase tracking-[0.1em] text-on-surface-variant mb-2">Exceptions</p>
+<p class="font-headline text-3xl font-extrabold text-tertiary">3 <span class="text-sm font-body text-outline font-normal align-middle ml-2">Invalid Scans</span></p>
+</div>
+</div>
+</div>
+<!-- Recent Scans Feed -->
+<div class="mt-12">
+<div class="flex justify-between items-center mb-6">
+<h3 class="font-headline text-xl font-bold text-on-surface">Recent Scans</h3>
+<a class="font-label text-sm text-primary font-bold hover:text-primary-container transition-colors" href="#">View Full Ledger</a>
+</div>
+<div class="bg-surface-container-lowest rounded-xl p-2 md:p-6 overflow-hidden">
+<div class="space-y-3">
+<!-- List Item 1 -->
+<div class="flex items-center justify-between p-4 bg-surface rounded-lg hover:bg-surface-container-low transition-colors group">
+<div class="flex items-center gap-4">
+<div class="h-10 w-10 rounded-full bg-secondary-fixed flex items-center justify-center text-on-secondary-fixed font-bold font-headline">
+                                    EC
+                                </div>
+<div>
+<p class="font-body font-bold text-on-surface">Elena Castillo</p>
+<p class="font-label text-xs text-on-surface-variant">ID: 2023-8492</p>
+</div>
+</div>
+<div class="flex flex-col items-end">
+<span class="px-3 py-1 bg-primary-fixed text-on-primary-fixed-variant rounded-full font-label text-xs font-bold uppercase tracking-wider mb-1">Present</span>
+<p class="font-label text-xs text-outline">Just now</p>
+</div>
+</div>
+<!-- List Item 2 -->
+<div class="flex items-center justify-between p-4 bg-surface rounded-lg hover:bg-surface-container-low transition-colors group">
+<div class="flex items-center gap-4">
+<div class="h-10 w-10 rounded-full bg-secondary-fixed flex items-center justify-center text-on-secondary-fixed font-bold font-headline">
+                                    MR
+                                </div>
+<div>
+<p class="font-body font-bold text-on-surface">Marcus Reed</p>
+<p class="font-label text-xs text-on-surface-variant">ID: 2023-1104</p>
+</div>
+</div>
+<div class="flex flex-col items-end">
+<span class="px-3 py-1 bg-primary-fixed text-on-primary-fixed-variant rounded-full font-label text-xs font-bold uppercase tracking-wider mb-1">Present</span>
+<p class="font-label text-xs text-outline">1 min ago</p>
+</div>
+</div>
+<!-- List Item 3 -->
+<div class="flex items-center justify-between p-4 bg-surface rounded-lg hover:bg-surface-container-low transition-colors group">
+<div class="flex items-center gap-4">
+<div class="h-10 w-10 rounded-full bg-tertiary-fixed flex items-center justify-center text-on-tertiary-fixed font-bold font-headline">
+                                    SJ
+                                </div>
+<div>
+<p class="font-body font-bold text-on-surface">Sarah Jenkins</p>
+<p class="font-label text-xs text-on-surface-variant">ID: 2023-5521</p>
+</div>
+</div>
+<div class="flex flex-col items-end">
+<span class="px-3 py-1 bg-tertiary-fixed text-on-tertiary-fixed-variant rounded-full font-label text-xs font-bold uppercase tracking-wider mb-1">Late</span>
+<p class="font-label text-xs text-outline">3 mins ago</p>
+</div>
+</div>
+<!-- List Item 4 -->
+<div class="flex items-center justify-between p-4 bg-surface rounded-lg hover:bg-surface-container-low transition-colors group">
+<div class="flex items-center gap-4">
+<div class="h-10 w-10 rounded-full bg-secondary-fixed flex items-center justify-center text-on-secondary-fixed font-bold font-headline">
+                                    DK
+                                </div>
+<div>
+<p class="font-body font-bold text-on-surface">David Kim</p>
+<p class="font-label text-xs text-on-surface-variant">ID: 2023-9932</p>
+</div>
+</div>
+<div class="flex flex-col items-end">
+<span class="px-3 py-1 bg-primary-fixed text-on-primary-fixed-variant rounded-full font-label text-xs font-bold uppercase tracking-wider mb-1">Present</span>
+<p class="font-label text-xs text-outline">5 mins ago</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+<!-- BottomNavBar (Mobile) -->
+<nav class="md:hidden fixed bottom-0 w-full z-50 flex justify-around items-center px-4 py-3 pb-safe bg-white/80 dark:bg-slate-950/80 backdrop-blur-xl rounded-t-2xl shadow-[0_-4px_20px_rgba(0,0,0,0.05)]">
+<a class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 scale-95 active:scale-90 transition-transform hover:text-blue-600" href="#">
+<span class="material-symbols-outlined mb-1">qr_code_scanner</span>
+<span class="font-inter text-[10px] uppercase tracking-widest font-bold">Scan</span>
+</a>
+<a class="flex flex-col items-center justify-center text-blue-700 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/30 rounded-xl px-3 py-1 scale-95 active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined filled mb-1">analytics</span>
+<span class="font-inter text-[10px] uppercase tracking-widest font-bold">Admin</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 scale-95 active:scale-90 transition-transform hover:text-blue-600" href="#">
+<span class="material-symbols-outlined mb-1">format_list_bulleted</span>
+<span class="font-inter text-[10px] uppercase tracking-widest font-bold">Records</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 scale-95 active:scale-90 transition-transform hover:text-blue-600" href="#">
+<span class="material-symbols-outlined mb-1">settings</span>
+<span class="font-inter text-[10px] uppercase tracking-widest font-bold">Settings</span>
+</a>
+</nav>
+</body></html>

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Scanner - The Architectural Chronograph</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "error": "#ba1a1a",
+                        "inverse-on-surface": "#eff0f8",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary-container": "#cadcff",
+                        "primary": "#00488d",
+                        "on-error-container": "#93000a",
+                        "on-tertiary-container": "#ffd1bc",
+                        "on-primary": "#ffffff",
+                        "tertiary-fixed-dim": "#ffb691",
+                        "background": "#f9f9ff",
+                        "on-secondary-fixed-variant": "#324769",
+                        "primary-container": "#005fb8",
+                        "surface-dim": "#d8dae2",
+                        "secondary-fixed": "#d6e3ff",
+                        "surface-container": "#ecedf6",
+                        "outline": "#727783",
+                        "error-container": "#ffdad6",
+                        "surface-container-low": "#f2f3fb",
+                        "surface-bright": "#f9f9ff",
+                        "surface-container-highest": "#e1e2ea",
+                        "secondary": "#4a5f83",
+                        "secondary-fixed-dim": "#b2c7f0",
+                        "surface-container-high": "#e7e8f0",
+                        "secondary-container": "#c0d5ff",
+                        "on-secondary": "#ffffff",
+                        "surface-tint": "#005db5",
+                        "outline-variant": "#c2c6d4",
+                        "tertiary-container": "#a04401",
+                        "on-primary-fixed-variant": "#00468b",
+                        "on-secondary-fixed": "#011b3c",
+                        "on-secondary-container": "#475c7f",
+                        "on-primary-fixed": "#001b3d",
+                        "on-tertiary-fixed-variant": "#783100",
+                        "on-surface": "#191c21",
+                        "surface": "#f9f9ff",
+                        "on-tertiary-fixed": "#341100",
+                        "on-tertiary": "#ffffff",
+                        "on-error": "#ffffff",
+                        "on-background": "#191c21",
+                        "tertiary": "#7b3200",
+                        "inverse-primary": "#a8c8ff",
+                        "tertiary-fixed": "#ffdbcb",
+                        "primary-fixed-dim": "#a8c8ff",
+                        "surface-variant": "#e1e2ea",
+                        "inverse-surface": "#2e3036",
+                        "on-surface-variant": "#424752",
+                        "primary-fixed": "#d6e3ff"
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    fontFamily: {
+                        "headline": ["Manrope"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; background-color: #191c21; /* Dark background for scanner context */ }
+        h1, h2, h3, h4, h5, h6, .display { font-family: 'Manrope', sans-serif; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 1; }
+        
+        /* Scanner specific styles to ensure visual hierarchy without lines */
+        .glass-panel {
+            background-color: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+        
+        .pulse-border {
+            box-shadow: 0 0 0 4px rgba(0, 72, 141, 0.2);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="min-h-screen text-on-surface antialiased overflow-hidden flex flex-col relative">
+<!-- Main Content Area (Scanner) -->
+<main class="flex-grow flex flex-col items-center justify-center relative w-full h-[884px] bg-on-surface overflow-hidden">
+<!-- Live Camera Feed Placeholder (Simulated with an image) -->
+<div class="absolute inset-0 z-0 w-full h-full object-cover opacity-60 pointer-events-none bg-inverse-surface">
+<!-- Simulated camera view of a classroom or hallway -->
+<img alt="Camera Viewfinder" class="w-full h-full object-cover mix-blend-overlay opacity-30" data-alt="First person view through a camera lens looking down a well lit modern university hallway with soft natural light" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAw0MOfBUr_cRabl_CPahG3qRX3g0ZvM0vmY1knTp3AaBVCuK7qmmBZgzK1bXoYNDs4BU1xI5NLo7w17zGaoajnDELzyfzKBcEDwvjUbfZ-PfU2ycPS6etErICJD5pinVE_HOIGMd6dfXnzdjpD6aamcgQi_ga9oO4TTSdO6eYGHxpl_lMsk3x0Oj5XnHAU1HZZcElQFIOVQq-fPYJlDcrv9w_B5fFgvLecj5goHPhpZoGxjgM5xQxa-eOuoRR4IdWWUeaH-sn7yw"/>
+</div>
+<!-- Scanner UI Overlay -->
+<div class="z-10 flex flex-col items-center justify-between w-full h-full px-6 py-12 md:py-8 max-w-lg mx-auto">
+<!-- Top Status / Instructional Header -->
+<div class="w-full text-center glass-panel rounded-xl p-4 shadow-[0_4px_30px_rgba(25,28,33,0.06)]">
+<h1 class="font-headline font-bold text-lg text-primary tracking-tight">Scan Attendance</h1>
+<p class="font-label text-sm text-on-surface-variant mt-1 tracking-wide">Position your personal QR code within the frame.</p>
+</div>
+<!-- Active Viewfinder Frame -->
+<div class="relative w-full aspect-square max-w-[320px] rounded-xl overflow-hidden glass-panel flex items-center justify-center p-2 pulse-border shadow-[0_10px_40px_rgba(25,28,33,0.1)]">
+<!-- Inner targeting reticle -->
+<div class="w-full h-full border-2 border-primary/40 rounded-lg relative flex items-center justify-center">
+<!-- Corner markers -->
+<div class="absolute top-0 left-0 w-8 h-8 border-t-4 border-l-4 border-primary rounded-tl-lg"></div>
+<div class="absolute top-0 right-0 w-8 h-8 border-t-4 border-r-4 border-primary rounded-tr-lg"></div>
+<div class="absolute bottom-0 left-0 w-8 h-8 border-b-4 border-l-4 border-primary rounded-bl-lg"></div>
+<div class="absolute bottom-0 right-0 w-8 h-8 border-b-4 border-r-4 border-primary rounded-br-lg"></div>
+<!-- Scanning line animation (simulated static for this output) -->
+<div class="absolute w-full h-0.5 bg-primary-container shadow-[0_0_8px_rgba(0,95,184,0.8)] top-1/2 left-0 transform -translate-y-1/2"></div>
+</div>
+</div>
+<!-- Bottom Action Area -->
+<div class="w-full flex flex-col gap-4 items-center">
+<!-- Status Indicator (Ready state) -->
+<div class="flex items-center gap-2 bg-surface-container-highest px-4 py-2 rounded-lg text-sm font-label text-on-surface">
+<span class="material-symbols-outlined text-[18px] text-primary">sensors</span>
+                    Ready to scan
+                </div>
+<!-- Primary Action Button -->
+<button class="w-full max-w-[240px] bg-gradient-to-r from-primary to-primary-container text-on-primary font-body font-semibold py-4 rounded-lg shadow-md hover:shadow-lg transition-all active:scale-95 flex items-center justify-center gap-2">
+<span class="material-symbols-outlined">qr_code_scanner</span>
+                    Scan Now
+                </button>
+<!-- Help Link -->
+<a class="mt-2 flex items-center justify-center gap-1 text-sm font-label text-white/70 hover:text-white transition-colors" href="#">
+<span class="material-symbols-outlined text-[16px]">help</span>
+                    Need help scanning?
+                </a>
+</div>
+</div>
+</main>
+</body></html>
