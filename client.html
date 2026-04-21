@@ -7,7 +7,6 @@
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <script id="tailwind-config">
         tailwind.config = {
             darkMode: "class",
@@ -96,17 +95,6 @@
 <script src="https://unpkg.com/html5-qrcode"></script>
 <script src="config.js"></script>
 <style>
-    body { font-family: 'Inter', sans-serif; background-color: #191c21; }
-    h1, h2, h3, h4, h5, h6, .display { font-family: 'Manrope', sans-serif; }
-    .material-symbols-outlined { font-variation-settings: 'FILL' 1; }
-    .glass-panel {
-        background-color: rgba(255, 255, 255, 0.8);
-        backdrop-filter: blur(20px);
-        -webkit-backdrop-filter: blur(20px);
-    }
-    .pulse-border {
-        box-shadow: 0 0 0 4px rgba(0, 72, 141, 0.2);
-    }
     #reader {
         width: 100% !important;
         border: none !important;
@@ -120,7 +108,10 @@
 <body class="min-h-screen text-on-surface antialiased overflow-hidden flex flex-col relative">
 <main class="flex-grow flex flex-col items-center justify-center relative w-full h-full bg-on-surface overflow-hidden">
 <div class="z-10 flex flex-col items-center justify-between w-full h-full px-6 py-12 md:py-8 max-w-lg mx-auto">
-<div class="w-full text-center glass-panel rounded-xl p-4 shadow-[0_4px_30px_rgba(25,28,33,0.06)]">
+<div class="w-full text-center glass-panel rounded-xl p-4 shadow-[0_4px_30px_rgba(25,28,33,0.06)] relative">
+<a href="index.html" class="absolute left-4 top-1/2 -translate-y-1/2 text-primary hover:bg-primary/10 p-1 rounded-full transition-colors">
+    <span class="material-symbols-outlined">arrow_back</span>
+</a>
 <h1 class="font-headline font-bold text-lg text-primary tracking-tight">Scan Attendance</h1>
 <p id="status-text" class="font-label text-sm text-on-surface-variant mt-1 tracking-wide">Position your personal QR code within the frame.</p>
 </div>
@@ -187,27 +178,18 @@
     async function onScanSuccess(decodedText, decodedResult) {
         // Pause and provide immediate feedback
         html5QrCode.pause();
-        beep.play().catch(() => {}); // Ignore if browser blocks auto-play audio
+        beep.play().catch(() => {}); 
         
         document.getElementById('scanner-overlay').classList.add('bg-green-500/20');
-        connectionStatus.innerHTML = `<span class="material-symbols-outlined text-[18px] text-yellow-500 animate-spin">sync</span> Syncing to Sheet...`;
+        connectionStatus.innerHTML = `<span class="material-symbols-outlined text-[18px] text-yellow-500 animate-spin">sync</span> Syncing...`;
         
-        try {
-            const response = await fetch(SCRIPT_URL, {
-                method: 'POST',
-                mode: 'no-cors', // Use no-cors for Apps Script if needed, but JSON response won't be readable
-                body: JSON.stringify({
-                    action: 'markAttendance',
-                    studentId: decodedText
-                })
-            });
-            
-            // Note: with no-cors we can't see the body, but we assume success if no error thrown
-            showSuccess(decodedText);
-            
-        } catch (err) {
-            console.error(err);
-            showError("Connection Failed");
+        // Use DataStore for local recording and remote syncing
+        const result = DataStore.markAttendance(decodedText);
+        
+        if (result.success) {
+            showSuccess(result.message);
+        } else {
+            showError(result.message);
         }
         
         // Resume after cooldown
@@ -219,8 +201,10 @@
         }, 3000);
     }
 
-    function showSuccess(id) {
-        statusText.innerHTML = `<span class="text-green-600 font-extrabold">CHECKED IN</span><br><span class="text-xs font-mono">${id}</span>`;
+    function showSuccess(msg) {
+        const student = DataStore.getStudents().find(s => s.id === msg) || null;
+        const displayName = student ? student.name : msg;
+        statusText.innerHTML = `<span class="text-green-600 font-extrabold">CHECKED IN</span><br><span class="text-xs font-mono">${displayName}</span>`;
         connectionStatus.innerHTML = `<span class="material-symbols-outlined text-[18px] text-green-500">check_circle</span> Success`;
     }
 

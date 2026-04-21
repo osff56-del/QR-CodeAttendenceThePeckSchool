@@ -10,7 +10,6 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Manrope:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/>
 <!-- Material Symbols -->
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <script id="tailwind-config">
         tailwind.config = {
@@ -134,7 +133,7 @@
 </a>
 </li>
 <li>
-<a class="flex items-center gap-3 px-4 py-3 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-900 transition-all duration-200 ease-in-out rounded-lg" href="#">
+<a class="flex items-center gap-3 px-4 py-3 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-900 transition-all duration-200 ease-in-out rounded-lg" href="history.html">
 <span class="material-symbols-outlined">history</span>
 <span>History</span>
 </a>
@@ -142,7 +141,7 @@
 </ul>
 </nav>
 <!-- Main Content Canvas -->
-<main class="flex-1 overflow-y-auto bg-surface pt-20 md:pt-0 pb-24 md:pb-0 relative">
+<main class="flex-1 overflow-y-auto bg-surface pt-20 md:pt-0 md:ml-72 pb-24 md:pb-0 relative">
 <!-- Desktop Contextual Header -->
 <div class="hidden md:flex justify-between items-center px-12 py-8 w-full sticky top-0 bg-surface/90 backdrop-blur-md z-30">
 <h2 class="font-headline text-3xl font-bold text-on-surface tracking-tight">Identity Token Provisioning</h2>
@@ -226,26 +225,20 @@
     let students = [];
     let qrcode;
 
-    async function loadStudents() {
-        try {
-            const response = await fetch(SCRIPT_URL);
-            const data = await response.json();
-            students = data.students;
-            
-            const select = document.getElementById('student-select');
-            select.innerHTML = '<option disabled selected value="">Select a student...</option>' + 
-                students.map(s => `<option value="${s.id}">${s.name} (${s.id})</option>`).join('');
-            
-            // Check for URL parameter
-            const urlParams = new URLSearchParams(window.location.search);
-            const idParam = urlParams.get('id');
-            if (idParam) {
-                select.value = idParam;
-                handleSelectChange();
-                generateQR();
-            }
-        } catch (err) {
-            console.error("Failed to load students", err);
+    function loadStudents() {
+        students = DataStore.getStudents();
+        
+        const select = document.getElementById('student-select');
+        select.innerHTML = '<option disabled selected value="">Select a student...</option>' + 
+            students.map(s => `<option value="${s.id}">${s.name} (${s.id})</option>`).join('');
+        
+        // Check for URL parameter
+        const urlParams = new URLSearchParams(window.location.search);
+        const idParam = urlParams.get('id');
+        if (idParam) {
+            select.value = idParam;
+            handleSelectChange();
+            generateQR();
         }
     }
 
@@ -276,6 +269,15 @@
     }
 
     function downloadQR() {
+        // Try canvas first (some browsers), then fall back to img
+        const canvas = document.querySelector('#qrcode canvas');
+        if (canvas) {
+            const link = document.createElement('a');
+            link.download = `QR_${document.getElementById('preview-name').innerText}.png`;
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+            return;
+        }
         const img = document.querySelector('#qrcode img');
         if (!img) return alert("Generate a QR code first");
         const link = document.createElement('a');
@@ -284,7 +286,8 @@
         link.click();
     }
 
-    loadStudents();
+    // Wait for DataStore to initialize
+    setTimeout(loadStudents, 500);
 </script>
 
 <!-- BottomNavBar (Mobile Shell) -->
@@ -301,9 +304,9 @@
 <span class="material-symbols-outlined text-2xl">format_list_bulleted</span>
 <span>Records</span>
 </a>
-<a class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 hover:text-blue-600 scale-95 active:scale-90 transition-transform gap-1" href="#">
-<span class="material-symbols-outlined text-2xl">settings</span>
-<span>Settings</span>
+<a class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 hover:text-blue-600 scale-95 active:scale-90 transition-transform gap-1" href="history.html">
+<span class="material-symbols-outlined text-2xl">history</span>
+<span>History</span>
 </a>
 </nav>
 </body></html>

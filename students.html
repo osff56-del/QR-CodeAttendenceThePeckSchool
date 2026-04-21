@@ -10,7 +10,6 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
 <!-- Material Symbols -->
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <!-- Tailwind CSS -->
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <!-- Tailwind Configuration -->
@@ -101,7 +100,7 @@
 </head>
 <body class="bg-background text-on-surface font-body antialiased min-h-screen flex flex-col">
 <!-- TopAppBar -->
-<header class="fixed top-0 z-50 flex justify-between items-center w-full px-6 py-4 bg-slate-50 dark:bg-slate-950 transition-colors duration-300 shadow-none border-none">
+<header class="fixed top-0 left-0 right-0 md:left-72 z-50 flex justify-between items-center px-6 py-4 bg-slate-50 dark:bg-slate-950 transition-colors duration-300 shadow-none border-none">
 <div class="flex items-center gap-4">
 <button class="md:hidden text-blue-700 dark:text-blue-400 hover:bg-slate-200/50 dark:hover:bg-slate-800/50 p-2 rounded-lg transition-colors duration-300 flex items-center justify-center">
 <span class="material-symbols-outlined">menu</span>
@@ -140,35 +139,35 @@
 <span class="font-inter text-sm font-medium">QR Generator</span>
 </a>
 <!-- History -->
-<a class="flex items-center gap-4 px-4 py-3 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-900 transition-all duration-200 ease-in-out" href="#">
+<a class="flex items-center gap-4 px-4 py-3 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-900 transition-all duration-200 ease-in-out" href="history.html">
 <span class="material-symbols-outlined">history</span>
 <span class="font-inter text-sm font-medium">History</span>
 </a>
 </nav>
 </aside>
 <!-- Main Content Canvas -->
-<main class="flex-grow pt-[88px] pb-24 md:pb-12 md:pl-72 px-4 md:px-8 lg:px-12 max-w-[1600px] w-full mx-auto">
+<main class="flex-grow pt-[72px] pb-24 md:pb-6 md:ml-72 px-4 md:px-8 lg:px-12">
 <!-- Header Section -->
-<div class="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-10 pt-4">
+<div class="flex flex-col lg:flex-row lg:items-end justify-between gap-4 mb-4 pt-2">
 <div class="flex flex-col gap-2">
-<h1 class="font-headline text-4xl lg:text-5xl font-extrabold text-on-surface tracking-tight leading-none">Student Directory</h1>
+<h1 class="font-headline text-2xl lg:text-3xl font-extrabold text-on-surface tracking-tight leading-none">Student Directory</h1>
 <p id="total-registered" class="font-label text-xs uppercase tracking-[0.15em] text-primary font-bold">Total Registered: Loading...</p>
 </div>
 <div class="flex flex-col sm:flex-row gap-4 w-full lg:w-auto">
 <!-- Search Bar -->
 <div class="relative w-full sm:w-[320px]">
-<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant/70">search</span>
-<input id="search-input" class="w-full bg-surface-container-highest text-on-surface placeholder:text-on-surface-variant/70 rounded-xl py-3 pl-12 pr-4 border-none focus:ring-2 focus:ring-primary/20 focus:bg-surface-container-lowest transition-all font-body text-sm outline-none" placeholder="Search names or IDs..." type="text"/>
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant/70 text-[18px]">search</span>
+<input id="search-input" class="w-full bg-surface-container-highest text-on-surface placeholder:text-on-surface-variant/70 rounded-lg py-2 pl-10 pr-4 border-none focus:ring-2 focus:ring-primary/20 focus:bg-surface-container-lowest transition-all font-body text-sm outline-none" placeholder="Search names or IDs..." type="text"/>
 </div>
 <!-- Primary Action Button -->
-<button onclick="showAddModal()" class="bg-primary-gradient text-on-primary px-6 py-3 rounded-xl font-label font-bold text-sm tracking-wide flex items-center justify-center gap-2 hover:opacity-90 transition-opacity shadow-[0_4px_14px_rgba(0,72,141,0.2)]">
+<button onclick="showAddModal()" class="bg-primary-gradient text-on-primary px-4 py-2 rounded-lg font-label font-bold text-sm tracking-wide flex items-center justify-center gap-2 hover:opacity-90 transition-opacity shadow-[0_4px_14px_rgba(0,72,141,0.2)]">
 <span class="material-symbols-outlined text-[20px]">person_add</span>
                     Add Student
                 </button>
 </div>
 </div>
 <!-- Student List Container -->
-<div id="student-list" class="flex flex-col gap-3">
+<div id="student-list" class="flex flex-col gap-1">
     <!-- Dynamic content will be injected here -->
 </div>
 </main>
@@ -197,41 +196,33 @@
 <script>
     let students = [];
 
-    async function loadStudents() {
-        try {
-            const response = await fetch(SCRIPT_URL);
-            const data = await response.json();
-            students = data.students;
-            renderStudents(students);
-            document.getElementById('total-registered').innerText = `Total Registered: ${students.length}`;
-        } catch (err) {
-            console.error("Failed to load students", err);
-        }
+    function loadStudents() {
+        students = DataStore.getStudents();
+        renderStudents(students);
+        document.getElementById('total-registered').innerText = `Total Registered: ${students.length}`;
     }
 
     function renderStudents(list) {
         const container = document.getElementById('student-list');
         container.innerHTML = list.map(student => `
-            <div class="group flex flex-col sm:flex-row sm:items-center justify-between p-4 sm:p-5 rounded-2xl bg-surface hover:bg-surface-container-lowest hover:shadow-[0_8px_30px_rgb(25,28,33,0.04)] transition-all duration-300">
-                <div class="flex items-center gap-5 mb-4 sm:mb-0">
-                    <div class="w-12 h-12 rounded-full bg-secondary-container flex items-center justify-center text-on-secondary-container font-headline font-extrabold text-lg">
+            <div class="flex items-center justify-between px-4 py-2 rounded-lg bg-surface hover:bg-surface-container-lowest transition-all duration-200">
+                <div class="flex items-center gap-3">
+                    <div class="w-8 h-8 rounded-full bg-secondary-container flex items-center justify-center text-on-secondary-container font-headline font-bold text-xs flex-shrink-0">
                         ${student.name.split(' ').map(n => n[0]).join('')}
                     </div>
-                    <div>
-                        <h3 class="font-headline font-bold text-on-surface text-lg leading-tight mb-0.5">${student.name}</h3>
-                        <p class="font-body text-sm text-on-surface-variant">${student.id}</p>
+                    <div class="min-w-0">
+                        <h3 class="font-headline font-bold text-on-surface text-sm leading-tight truncate">${student.name}</h3>
+                        <p class="font-body text-xs text-on-surface-variant">${student.id}</p>
                     </div>
                 </div>
-                <div class="flex items-center gap-3 sm:gap-6 self-start sm:self-auto w-full sm:w-auto justify-between sm:justify-end">
-                    <div class="px-3 py-1 bg-primary-fixed rounded-md">
-                        <span class="font-label text-[10px] uppercase tracking-wider font-bold text-on-primary-fixed-variant">${student.status || 'Active'}</span>
-                    </div>
-                    <div class="flex items-center gap-2">
-                        <button onclick="window.location.href='generator.html?id=${student.id}'" class="flex items-center gap-2 px-4 py-2 rounded-xl text-primary hover:bg-surface-container-highest transition-colors font-label font-bold text-sm">
-                            <span class="material-symbols-outlined text-[20px]">qr_code_2</span>
-                            <span class="hidden xs:inline">View QR</span>
-                        </button>
-                    </div>
+                <div class="flex items-center gap-2 flex-shrink-0">
+                    <span class="px-2 py-0.5 bg-primary-fixed rounded text-[10px] uppercase tracking-wider font-bold text-on-primary-fixed-variant">${student.status || 'Active'}</span>
+                    <button onclick="window.location.href='generator.html?id=${student.id}'" class="p-1.5 text-primary hover:bg-surface-container-highest rounded-lg transition-colors" title="View QR">
+                        <span class="material-symbols-outlined text-[18px]">qr_code_2</span>
+                    </button>
+                    <button onclick="deleteStudent('${student.id}')" class="p-1.5 text-error hover:bg-error/10 rounded-lg transition-colors" title="Delete">
+                        <span class="material-symbols-outlined text-[18px]">delete</span>
+                    </button>
                 </div>
             </div>
         `).join('');
@@ -245,36 +236,28 @@
         document.getElementById('add-modal').classList.add('hidden');
     }
 
-    async function saveStudent() {
+    function saveStudent() {
         const name = document.getElementById('new-student-name').value;
         const id = document.getElementById('new-student-id').value;
-        const btn = document.getElementById('save-btn');
         
         if (!name || !id) return alert("Please fill all fields");
         
-        btn.disabled = true;
-        btn.innerText = "Saving...";
-
-        try {
-            const response = await fetch(SCRIPT_URL, {
-                method: 'POST',
-                body: JSON.stringify({ action: 'addStudent', name, id })
-            });
-            const result = await response.json();
-            if (result.success) {
-                hideAddModal();
-                loadStudents();
-                document.getElementById('new-student-name').value = '';
-                document.getElementById('new-student-id').value = '';
-            } else {
-                alert("Error: " + result.message);
-            }
-        } catch (err) {
-            alert("Network Error");
+        const result = DataStore.addStudent(name, id);
+        if (result.success) {
+            hideAddModal();
+            loadStudents();
+            document.getElementById('new-student-name').value = '';
+            document.getElementById('new-student-id').value = '';
+        } else {
+            alert(result.message);
         }
-        
-        btn.disabled = false;
-        btn.innerText = "Save Student";
+    }
+
+    function deleteStudent(id) {
+        if (confirm("Are you sure you want to delete this student?")) {
+            DataStore.deleteStudent(id);
+            loadStudents();
+        }
     }
 
     document.getElementById('search-input').addEventListener('input', (e) => {
@@ -285,7 +268,8 @@
         renderStudents(filtered);
     });
 
-    loadStudents();
+    // Wait for DataStore to initialize
+    setTimeout(loadStudents, 500);
 </script>
 <nav class="md:hidden fixed bottom-0 w-full z-50 flex justify-around items-center px-4 py-3 pb-safe bg-white/80 dark:bg-slate-950/80 backdrop-blur-xl shadow-[0_-4px_20px_rgba(0,0,0,0.05)] rounded-t-2xl border-none">
 <a class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 hover:text-blue-600 scale-95 active:scale-90 transition-transform" href="client.html">
@@ -300,9 +284,9 @@
 <span class="material-symbols-outlined fill mb-1 text-[24px]">format_list_bulleted</span>
 <span class="font-inter text-[10px] uppercase tracking-widest font-bold">Records</span>
 </a>
-<a class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 hover:text-blue-600 scale-95 active:scale-90 transition-transform" href="#">
-<span class="material-symbols-outlined mb-1 text-[24px]">settings</span>
-<span class="font-inter text-[10px] uppercase tracking-widest font-bold">Settings</span>
+<a class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 hover:text-blue-600 scale-95 active:scale-90 transition-transform" href="history.html">
+<span class="material-symbols-outlined mb-1 text-[24px]">history</span>
+<span class="font-inter text-[10px] uppercase tracking-widest font-bold">History</span>
 </a>
 </nav>
 </body></html>

@@ -7,7 +7,6 @@
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <script id="tailwind-config">
         tailwind.config = {
             darkMode: "class",
@@ -89,7 +88,8 @@
 </head>
 <body class="bg-background text-on-surface font-body antialiased flex h-screen overflow-hidden">
 <!-- NavigationDrawer (Desktop) -->
-<aside class="hidden md:flex h-full w-72 rounded-r-none flex-col p-4 bg-slate-50 dark:bg-slate-950 transition-all duration-200 ease-in-out border-r border-slate-100">
+<div id="drawer-overlay" class="fixed inset-0 bg-black/40 z-[60] hidden md:hidden" onclick="toggleDrawer()"></div>
+<aside id="mobile-drawer" class="fixed inset-y-0 left-0 z-[70] w-72 flex-col p-4 bg-slate-50 dark:bg-slate-950 transition-transform duration-300 ease-in-out border-r border-slate-100 -translate-x-full md:translate-x-0 md:static md:flex">
 <!-- Header Profile -->
 <div class="flex items-center gap-4 mb-8 p-2">
 <div class="h-12 w-12 rounded-full overflow-hidden bg-surface-container-highest flex-shrink-0">
@@ -114,7 +114,7 @@
 <span class="material-symbols-outlined">qr_code_2</span>
                 QR Generator
             </a>
-<a class="flex items-center gap-3 px-4 py-3 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-900 rounded-lg transition-all duration-200 ease-in-out" href="#">
+<a class="flex items-center gap-3 px-4 py-3 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-900 rounded-lg transition-all duration-200 ease-in-out" href="history.html">
 <span class="material-symbols-outlined">history</span>
                 History
             </a>
@@ -123,9 +123,9 @@
 <!-- Main Content Area -->
 <div class="flex-1 flex flex-col h-full relative overflow-y-auto">
 <!-- TopAppBar -->
-<header class="flex justify-between items-center w-full px-6 py-4 bg-slate-50 dark:bg-slate-950 sticky top-0 z-40 bg-slate-100 dark:bg-slate-900 transition-colors duration-300">
+<header class="flex justify-between items-center w-full px-6 py-4 sticky top-0 z-40 bg-slate-50 dark:bg-slate-950 transition-colors duration-300">
 <div class="flex items-center gap-4">
-<button class="md:hidden text-slate-500 dark:text-slate-400 hover:bg-slate-200/50 dark:hover:bg-slate-800/50 p-2 rounded-full transition-colors duration-300">
+<button onclick="toggleDrawer()" class="md:hidden text-slate-500 dark:text-slate-400 hover:bg-slate-200/50 dark:hover:bg-slate-800/50 p-2 rounded-full transition-colors duration-300">
 <span class="material-symbols-outlined">menu</span>
 </button>
 <h1 class="text-xl font-manrope font-extrabold tracking-tighter text-blue-800 dark:text-blue-300">Chronograph</h1>
@@ -149,8 +149,8 @@
 </span>
 <span class="font-label text-sm uppercase tracking-widest text-primary font-bold">Live Session Active</span>
 </div>
-<h2 class="font-headline text-3xl md:text-4xl font-extrabold text-on-surface">Architectural Design 101</h2>
-<p class="font-body text-on-surface-variant mt-1">Prof. Sterling • Room 402 • 09:00 AM - 11:30 AM</p>
+<h2 id="session-name" class="font-headline text-3xl md:text-4xl font-extrabold text-on-surface cursor-pointer hover:text-primary transition-colors" onclick="showSessionModal()">Architectural Design 101</h2>
+<p id="session-details" class="font-body text-on-surface-variant mt-1 cursor-pointer hover:text-primary transition-colors" onclick="showSessionModal()">Prof. Sterling • Room 402 • 09:00 AM - 11:30 AM</p>
 </div>
 <button onclick="loadStats()" class="bg-surface-container-highest px-6 py-3 rounded-lg font-label font-bold tracking-wide hover:opacity-90 transition-opacity">
                     Refresh Stats
@@ -197,32 +197,22 @@
 </div>
 </main>
 </div>
-
 <script>
-    async function loadStats() {
-        try {
-            const response = await fetch(SCRIPT_URL);
-            const data = await response.json();
-            
-            const total = data.stats.total;
-            const present = data.stats.present;
-            const percent = total > 0 ? Math.round((present / total) * 100) : 0;
-            
-            document.getElementById('stat-present').innerText = present;
-            document.getElementById('stat-total').innerText = `/ ${total}`;
-            document.getElementById('stat-percent').innerText = `${percent}%`;
-            document.getElementById('stat-active').innerText = total;
-            
-            renderRecentScans(data.attendance, data.students);
-        } catch (err) {
-            console.error("Failed to load stats", err);
-        }
+    function loadStats() {
+        const stats = DataStore.getStats();
+        const data = DataStore.getData();
+        
+        document.getElementById('stat-present').innerText = stats.present;
+        document.getElementById('stat-total').innerText = `/ ${stats.total}`;
+        document.getElementById('stat-percent').innerText = `${stats.percent}%`;
+        document.getElementById('stat-active').innerText = stats.total;
+        
+        renderRecentScans(data.attendance, data.students);
     }
 
     function renderRecentScans(attendance, students) {
         const container = document.getElementById('recent-scans');
-        // Sort attendance by timestamp descending and take last 5
-        const recent = attendance.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp)).slice(0, 5);
+        const recent = [...attendance].sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp)).slice(0, 5);
         
         container.innerHTML = recent.map(scan => {
             const student = students.find(s => s.id === scan.studentid) || { name: 'Unknown Student', id: scan.studentid };
@@ -252,9 +242,18 @@
         }
     }
 
-    // Refresh every 30 seconds
-    setInterval(loadStats, 30000);
-    loadStats();
+    // Refresh every 10 seconds, but only when tab is visible
+    let statsInterval = setInterval(loadStats, 10000);
+    document.addEventListener('visibilitychange', () => {
+        if (document.hidden) {
+            clearInterval(statsInterval);
+        } else {
+            loadStats();
+            statsInterval = setInterval(loadStats, 10000);
+        }
+    });
+    // Wait for DataStore to initialize then load stats
+    setTimeout(loadStats, 500);
 </script>
 
 <!-- BottomNavBar (Mobile) -->
@@ -271,9 +270,77 @@
 <span class="material-symbols-outlined mb-1">format_list_bulleted</span>
 <span class="font-inter text-[10px] uppercase tracking-widest font-bold">Records</span>
 </a>
-<a class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 scale-95 active:scale-90 transition-transform hover:text-blue-600" href="#">
-<span class="material-symbols-outlined mb-1">settings</span>
-<span class="font-inter text-[10px] uppercase tracking-widest font-bold">Settings</span>
+<a class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 scale-95 active:scale-90 transition-transform hover:text-blue-600" href="history.html">
+<span class="material-symbols-outlined mb-1">history</span>
+<span class="font-inter text-[10px] uppercase tracking-widest font-bold">History</span>
 </a>
 </nav>
+
+<!-- Session Edit Modal -->
+<div id="session-modal" class="fixed inset-0 z-[100] hidden flex items-center justify-center bg-black/50 backdrop-blur-sm">
+    <div class="bg-surface rounded-2xl p-8 max-w-md w-full shadow-2xl mx-4">
+        <h2 class="text-2xl font-manrope font-bold mb-6">Edit Session Info</h2>
+        <div class="space-y-4">
+            <div>
+                <label class="block text-xs font-bold uppercase tracking-widest text-on-surface-variant mb-2">Class Name</label>
+                <input id="edit-session-name" type="text" class="w-full bg-surface-container-highest rounded-xl p-3 border-none" placeholder="e.g. Architectural Design 101">
+            </div>
+            <div>
+                <label class="block text-xs font-bold uppercase tracking-widest text-on-surface-variant mb-2">Details (Professor, Room, Time)</label>
+                <input id="edit-session-details" type="text" class="w-full bg-surface-container-highest rounded-xl p-3 border-none" placeholder="e.g. Prof. Sterling • Room 402 • 09:00 AM">
+            </div>
+            <div class="flex gap-4 mt-8">
+                <button onclick="hideSessionModal()" class="flex-1 px-4 py-3 rounded-xl bg-surface-container-high font-bold">Cancel</button>
+                <button onclick="saveSession()" class="flex-1 px-4 py-3 rounded-xl bg-primary text-on-primary font-bold">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // --- Mobile Drawer Toggle ---
+    function toggleDrawer() {
+        const drawer = document.getElementById('mobile-drawer');
+        const overlay = document.getElementById('drawer-overlay');
+        const isOpen = !drawer.classList.contains('-translate-x-full');
+        if (isOpen) {
+            drawer.classList.add('-translate-x-full');
+            overlay.classList.add('hidden');
+        } else {
+            drawer.classList.remove('-translate-x-full');
+            overlay.classList.remove('hidden');
+        }
+    }
+
+    // --- Session Info Persistence ---
+    function loadSession() {
+        const session = JSON.parse(localStorage.getItem('chronograph_session') || 'null');
+        if (session) {
+            document.getElementById('session-name').innerText = session.name;
+            document.getElementById('session-details').innerText = session.details;
+        }
+    }
+
+    function showSessionModal() {
+        document.getElementById('edit-session-name').value = document.getElementById('session-name').innerText;
+        document.getElementById('edit-session-details').value = document.getElementById('session-details').innerText;
+        document.getElementById('session-modal').classList.remove('hidden');
+    }
+
+    function hideSessionModal() {
+        document.getElementById('session-modal').classList.add('hidden');
+    }
+
+    function saveSession() {
+        const name = document.getElementById('edit-session-name').value.trim();
+        const details = document.getElementById('edit-session-details').value.trim();
+        if (!name) return alert("Class name is required");
+        localStorage.setItem('chronograph_session', JSON.stringify({ name, details }));
+        document.getElementById('session-name').innerText = name;
+        document.getElementById('session-details').innerText = details;
+        hideSessionModal();
+    }
+
+    loadSession();
+</script>
 </body></html>
